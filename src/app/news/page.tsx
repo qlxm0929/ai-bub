@@ -15,6 +15,23 @@ export default function NewsPage() {
   const [tab, setTab] = useState<Tab>('all');
   const [source, setSource] = useState('전체');
   const [updatedAt, setUpdatedAt] = useState('');
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const fetchNewsData = () => {
+    setIsRefreshing(true);
+    fetch('/api/news')
+      .then((r) => r.json())
+      .then((data) => {
+        setNews(data.news || []);
+        setUpdatedAt(data.updatedAt || '');
+        setLoading(false);
+        setIsRefreshing(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        setIsRefreshing(false);
+      });
+  };
 
   // 쿼리 스트링으로 유튜브 탭 이동 처리
   useEffect(() => {
@@ -25,14 +42,7 @@ export default function NewsPage() {
   }, []);
 
   useEffect(() => {
-    fetch('/api/news')
-      .then((r) => r.json())
-      .then((data) => {
-        setNews(data.news || []);
-        setUpdatedAt(data.updatedAt || '');
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+    fetchNewsData();
   }, []);
 
   const filtered = news.filter((item) => {
@@ -60,25 +70,38 @@ export default function NewsPage() {
         </p>
       </div>
 
-      <div className="flex gap-2 mb-6 border-b border-white/5 pb-4 flex-wrap">
-        {[
-          { key: 'all', label: `전체 (${news.length})`, icon: '📰' },
-          { key: 'ko', label: `🇰🇷 한국어 (${koCount})`, icon: '' },
-          { key: 'en', label: `🌐 해외 뉴스 (${enCount})`, icon: '' },
-          { key: 'youtube', label: 'YouTube', icon: '▶️' },
-        ].map(({ key, label }) => (
-          <button
-            key={key}
-            onClick={() => { setTab(key as Tab); setSource('전체'); }}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              tab === key
-                ? 'bg-purple-600 text-white'
-                : 'text-gray-400 hover:text-white hover:bg-white/5'
-            }`}
+      <div className="flex items-center justify-between mb-6 border-b border-white/5 pb-4">
+        <div className="flex gap-2 flex-wrap">
+          {[
+            { key: 'all', label: `전체 (${news.length})`, icon: '📰' },
+            { key: 'ko', label: `🇰🇷 한국어 (${koCount})`, icon: '' },
+            { key: 'en', label: `🌐 해외 뉴스 (${enCount})`, icon: '' },
+            { key: 'youtube', label: 'YouTube', icon: '▶️' },
+          ].map(({ key, label }) => (
+            <button
+              key={key}
+              onClick={() => { setTab(key as Tab); setSource('전체'); }}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                tab === key
+                  ? 'bg-purple-600 text-white'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        
+        {tab !== 'youtube' && (
+          <button 
+            onClick={fetchNewsData}
+            disabled={isRefreshing || loading}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors ${isRefreshing ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
-            {label}
+            <span className={`text-base ${isRefreshing ? 'animate-spin' : ''}`}>🔄</span>
+            <span className="hidden sm:inline">{isRefreshing ? '업데이트 중...' : '새로고침'}</span>
           </button>
-        ))}
+        )}
       </div>
 
       {tab === 'youtube' ? (

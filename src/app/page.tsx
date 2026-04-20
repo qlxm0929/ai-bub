@@ -5,7 +5,7 @@ import { communityResources } from '@/lib/community';
 import { fetchNewTools } from '@/lib/newtools';
 import Link from 'next/link';
 
-export const revalidate = 1800;
+export const revalidate = 60;
 
 export default async function HomePage() {
   let latestNews: Awaited<ReturnType<typeof fetchNews>> = [];

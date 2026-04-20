@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { fetchNews } from '@/lib/rss';
 
-// 30분마다 자동 갱신
-export const revalidate = 1800;
+// 1분마다 자동 갱신 (실시간 업데이트 용)
+export const revalidate = 60;
 
 export async function GET() {
   try {
