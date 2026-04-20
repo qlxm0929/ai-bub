@@ -112,7 +112,7 @@ export async function fetchNews(limit = 40): Promise<NewsItem[]> {
             sourceKo: feed.sourceKo,
             category: feed.category,
             isKorean: feed.isKorean,
-            image: extractImage(item as Record<string, unknown>),
+            image: extractImage(item as unknown as Record<string, unknown>),
           };
         }));
         allItems.push(...items);

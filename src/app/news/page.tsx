@@ -224,7 +224,7 @@ function YouTubeSection() {
   );
 }
 
-function ChannelCard({ channel }: { channel: ReturnType<typeof youtubeChannels>[0] }) {
+function ChannelCard({ channel }: { channel: typeof youtubeChannels[0] }) {
   return (
     <a href={channel.channelUrl} target="_blank" rel="noopener noreferrer"
       className="glass-card p-5 group cursor-pointer flex flex-col hover:border-red-500/30">
