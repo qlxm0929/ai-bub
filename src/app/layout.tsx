@@ -4,8 +4,8 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'AI 쉽게 - 초보자를 위한 AI 입문 가이드',
-  description: 'AI가 처음인 분들을 위한 최신 뉴스, 도구, 가이드, 커뮤니티 리소스를 제공합니다.',
+  title: 'AI.EL - 사라지지 않는 전생의 기억',
+  description: '무한한 기술의 흐름 속에서도 변치 않는 영감과 지혜를 전달하는 AI 아카이브입니다.',
 };
 
 export default function RootLayout({

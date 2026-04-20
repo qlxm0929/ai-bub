@@ -6,15 +6,13 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-4 group">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-white font-bold group-hover:scale-105 transition-transform">
-                AI
-              </div>
-              <span className="font-bold text-lg text-white tracking-tight">AI 쉽게</span>
+            <Link href="/" className="flex items-center gap-3 mb-4 group">
+              <img src="/aiel-logo.png" alt="AI.EL Logo" className="w-8 h-8 rounded-md group-hover:scale-105 transition-transform opacity-80 group-hover:opacity-100" />
+              <span className="font-bold text-lg text-white tracking-widest">AI.EL</span>
             </Link>
             <p className="text-sm text-gray-500 leading-relaxed max-w-sm">
-              AI가 처음인 분들을 위한 길라잡이입니다.
-              어려운 용어 없이 누구나 쉽게 AI를 배우고 활용할 수 있도록 돕습니다.
+              사라지지 않는 전생의 기억.<br/>
+              무한한 기술의 흐름 속에서도 변치 않는 영감과 지혜를 전달하는 AI 아카이브입니다.
             </p>
           </div>
 
@@ -40,7 +38,7 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-gray-600">
-            © {new Date().getFullYear()} AI 쉽게. All rights reserved.
+            © {new Date().getFullYear()} AI.EL. All rights reserved.
           </p>
           <div className="flex gap-4">
             <span className="text-xs text-gray-600">Made with 💜 using Next.js & Tailwind CSS</span>

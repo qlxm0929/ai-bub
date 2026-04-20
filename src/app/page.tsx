@@ -35,17 +35,17 @@ export default async function HomePage() {
             AI 초보자를 위한 공간
           </div>
 
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight mb-6 animate-fade-in-up"
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-widest mb-6 animate-fade-in-up"
             style={{ animationDelay: '0.1s', opacity: 0, animationFillMode: 'forwards' }}>
-            <span className="gradient-text">AI 쉽게</span>
+            <span className="gradient-text">AI.EL</span>
             <br />
-            <span className="text-white text-4xl sm:text-5xl font-bold">시작하세요</span>
+            <span className="text-white text-3xl sm:text-4xl font-bold tracking-normal mt-4 block">사라지지 않는 전생의 기억</span>
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up"
             style={{ animationDelay: '0.2s', opacity: 0, animationFillMode: 'forwards' }}>
-            AI가 처음이어도 괜찮아요. 최신 AI 뉴스부터 도구 사용법까지,<br className="hidden sm:block" />
-            초보자도 바로 따라할 수 있게 알려드립니다.
+            무한한 기술의 흐름 속에서도 변치 않는 영감과 지혜를 전달합니다.<br className="hidden sm:block" />
+            AI가 처음인 분들도 직관적으로 다가갈 수 있는 신비로운 아카이브입니다.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up"
