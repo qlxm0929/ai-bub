@@ -38,8 +38,6 @@ export default async function HomePage() {
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-widest mb-6 animate-fade-in-up"
             style={{ animationDelay: '0.1s', opacity: 0, animationFillMode: 'forwards' }}>
             <span className="gradient-text">AI.EL</span>
-            <br />
-            <span className="text-white text-3xl sm:text-4xl font-bold tracking-normal mt-4 block">사라지지 않는 전생의 기억</span>
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up"

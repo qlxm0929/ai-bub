@@ -11,7 +11,6 @@ export default function Footer() {
               <span className="font-bold text-lg text-white tracking-widest">AI.EL</span>
             </Link>
             <p className="text-sm text-gray-500 leading-relaxed max-w-sm">
-              사라지지 않는 전생의 기억.<br/>
               무한한 기술의 흐름 속에서도 변치 않는 영감과 지혜를 전달하는 AI 아카이브입니다.
             </p>
           </div>

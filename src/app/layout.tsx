@@ -4,7 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'AI.EL - 사라지지 않는 전생의 기억',
+  title: 'AI.EL - 최신 AI 아카이브',
   description: '무한한 기술의 흐름 속에서도 변치 않는 영감과 지혜를 전달하는 AI 아카이브입니다.',
 };
 
