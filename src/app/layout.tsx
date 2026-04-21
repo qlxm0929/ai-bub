@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SpaceBackground from '@/components/SpaceBackground';
 
 export const metadata: Metadata = {
   title: 'AI.EL - 최신 AI 아카이브',
@@ -15,12 +16,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className="dark">
-      <body className="bg-black text-white min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1 w-full flex flex-col">
-          {children}
-        </main>
-        <Footer />
+      <body className="bg-black text-white min-h-screen flex flex-col relative">
+        <SpaceBackground />
+        <div className="relative z-10 flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-1 w-full flex flex-col">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
