@@ -30,7 +30,7 @@ export default function ToolsPage() {
                     href={tool.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="glass-card p-6 group cursor-pointer relative overflow-hidden"
+                    className="glass-card glow-green p-6 group cursor-pointer relative overflow-hidden"
                     style={{ animationDelay: `${i * 0.1}s` }}
                   >
                     <div className="flex items-start justify-between mb-4">

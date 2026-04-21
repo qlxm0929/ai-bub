@@ -168,7 +168,7 @@ export default function NewsPage() {
 
 function NewsCard({ item }: { item: NewsItem }) {
   return (
-    <div className="glass-card p-5 flex flex-col group hover:border-cyan-500/30">
+    <div className="glass-card glow-cyan p-5 flex flex-col group hover:border-cyan-500/30">
       <div className="flex items-center justify-between mb-3">
         <span className={`badge text-xs ${item.isKorean ? 'badge-green' : 'badge-cyan'}`}>
           {item.isKorean ? '🇰🇷' : '🌐'} {item.sourceKo}
