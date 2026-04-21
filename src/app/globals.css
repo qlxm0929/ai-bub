@@ -192,6 +192,7 @@
   .neon-text-cyan {
     text-shadow: 0 0 10px rgba(34, 211, 238, 0.8), 0 0 20px rgba(34, 211, 238, 0.4);
   }
+}
 
 @keyframes fadeInUp {
   from {

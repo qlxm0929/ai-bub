@@ -43,6 +43,13 @@ export default function Footer() {
             <span className="text-xs text-gray-600">Made with 💜 using Next.js & Tailwind CSS</span>
           </div>
         </div>
+
+        {/* 은밀한 디테일 — 아는 사람만 아는 */}
+        <div className="mt-6 text-center select-none">
+          <p className="text-[10px] tracking-[0.3em] uppercase opacity-20 hover:opacity-40 transition-opacity duration-700 font-mono text-purple-400">
+            ∴ v0.∞ · since eon · <span className="not-italic">記憶は消えない</span> · archive://aiel
+          </p>
+        </div>
       </div>
     </footer>
   );
