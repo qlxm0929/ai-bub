@@ -190,6 +190,7 @@ export default function CommunityBoard() {
   const [posts, setPosts] = useState<CommunityPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState('전체');
+  const [sort, setSort] = useState('recent');
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [likedIds, setLikedIds] = useState<Set<string>>(new Set());
@@ -197,15 +198,15 @@ export default function CommunityBoard() {
   const [error, setError] = useState('');
   const formRef = useRef<HTMLDivElement>(null);
 
-  const fetchPosts = async (cat = category) => {
+  const fetchPosts = async (cat = category, sortOrder = sort) => {
     setLoading(true);
-    const res = await fetch(`/api/posts?category=${encodeURIComponent(cat)}`);
+    const res = await fetch(`/api/posts?category=${encodeURIComponent(cat)}&sort=${sortOrder}`);
     const data = await res.json();
     setPosts(data.posts || []);
     setLoading(false);
   };
 
-  useEffect(() => { fetchPosts(); }, [category]);
+  useEffect(() => { fetchPosts(); }, [category, sort]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -222,7 +223,8 @@ export default function CommunityBoard() {
     setShowForm(false);
     setForm({ nickname: '', category: '💡 AI 팁', title: '', content: '' });
     setCategory('전체');
-    await fetchPosts('전체');
+    setSort('recent');
+    await fetchPosts('전체', 'recent');
   };
 
   const handleLike = async (id: string) => {
@@ -306,16 +308,33 @@ export default function CommunityBoard() {
             </div>
           )}
 
-          {/* 카테고리 탭 */}
-          <div className="flex gap-2 mb-5 flex-wrap">
-            {POST_CATEGORIES.map(c => (
-              <button key={c} onClick={() => setCategory(c)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  category === c ? 'bg-purple-600 text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
-                }`}>
-                {c}
+          {/* 탭 & 필터 */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+            {/* 카테고리 탭 */}
+            <div className="flex gap-2 flex-wrap">
+              {POST_CATEGORIES.map(c => (
+                <button key={c} onClick={() => setCategory(c)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    category === c ? 'bg-purple-600 text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                  }`}>
+                  {c}
+                </button>
+              ))}
+            </div>
+            
+            {/* 정렬 필터 */}
+            <div className="flex bg-white/5 rounded-lg p-1 self-start sm:self-auto">
+              <button 
+                onClick={() => setSort('recent')}
+                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${sort === 'recent' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}>
+                ⏱️ 최신순
               </button>
-            ))}
+              <button 
+                onClick={() => setSort('popular')}
+                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${sort === 'popular' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}>
+                🔥 추천순
+              </button>
+            </div>
           </div>
 
           {/* 게시글 목록 */}

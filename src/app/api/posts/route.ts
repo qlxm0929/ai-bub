@@ -8,12 +8,18 @@ const supabase = createClient(
 
 export async function GET(req: NextRequest) {
   const category = req.nextUrl.searchParams.get('category') || '전체';
+  const sort = req.nextUrl.searchParams.get('sort') || 'recent';
   
   let query = supabase
     .from('community_posts')
     .select('*')
-    .order('created_at', { ascending: false })
     .limit(50);
+    
+  if (sort === 'popular') {
+    query = query.order('likes', { ascending: false }).order('created_at', { ascending: false });
+  } else {
+    query = query.order('created_at', { ascending: false });
+  }
   
   if (category !== '전체') {
     query = query.eq('category', category);
