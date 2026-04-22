@@ -4,6 +4,7 @@ export interface Guide {
   description: string;
   icon: string;
   difficulty: 1 | 2 | 3;
+  level: '초급' | '중급' | '심화';
   readTime: number;
   tags: string[];
   steps: {
@@ -13,13 +14,22 @@ export interface Guide {
   }[];
 }
 
+export const levelConfig = {
+  '초급': { label: '초급', color: 'badge-green', emoji: '🌱', desc: 'AI가 처음인 분들을 위한 기초 가이드' },
+  '중급': { label: '중급', color: 'badge-cyan',  emoji: '🔥', desc: 'AI를 조금 써본 분들을 위한 활용 가이드' },
+  '심화': { label: '심화', color: 'badge-orange', emoji: '⚡', desc: 'AI를 능숙하게 다루고 싶은 분들을 위한 심화 가이드' },
+};
+
 export const guides: Guide[] = [
+
+  // ── 초급 ─────────────────────────────────────────────────────
   {
     slug: 'chatgpt-start',
     title: 'ChatGPT 처음 시작하기',
     description: '회원가입부터 첫 대화까지 단계별로 따라해 보세요.',
     icon: '🤖',
     difficulty: 1,
+    level: '초급',
     readTime: 5,
     tags: ['ChatGPT', '입문', '대화형AI'],
     steps: [
@@ -45,11 +55,73 @@ export const guides: Guide[] = [
     ],
   },
   {
+    slug: 'ai-tools-compare',
+    title: 'ChatGPT vs Claude vs Gemini 비교',
+    description: '3대 AI의 장단점을 비교해서 나에게 맞는 AI를 찾아보세요.',
+    icon: '⚖️',
+    difficulty: 1,
+    level: '초급',
+    readTime: 6,
+    tags: ['비교', 'ChatGPT', 'Claude', 'Gemini'],
+    steps: [
+      {
+        title: 'ChatGPT — 가장 유명한 만능 AI',
+        content: '✅ 장점: 가장 많이 사용됨, 자료와 커뮤니티 풍부, 이미지 생성(Plus) 가능\n❌ 단점: 무료 버전은 가끔 막힘, 최신 정보 부족할 때 있음\n💡 추천 대상: AI 처음 쓰는 분, 뭐든 다 해보고 싶은 분',
+      },
+      {
+        title: 'Claude — 글쓰기와 분석의 왕',
+        content: '✅ 장점: 긴 문서 분석 탁월, 글쓰기 품질 최상, 한국어 매우 자연스러움\n❌ 단점: 이미지 생성 불가, 인터넷 검색 제한적\n💡 추천 대상: 긴 문서 분석, 좋은 글 쓰고 싶은 분',
+      },
+      {
+        title: 'Gemini — 구글과 연동되는 AI',
+        content: '✅ 장점: 최신 정보 검색 가능, 구글 문서/드라이브 연동, 무료\n❌ 단점: 창의적 글쓰기는 상대적으로 약함\n💡 추천 대상: 구글 서비스 많이 쓰는 분, 최신 정보가 중요한 분',
+      },
+      {
+        title: '어떤 걸 써야 할까?',
+        content: '처음이라면: ChatGPT\n글쓰기/문서분석: Claude\n최신 정보 검색: Gemini 또는 Perplexity\n이미지 만들기: DALL-E(ChatGPT Plus) 또는 Midjourney',
+        tip: '다 무료로 가입할 수 있으니 직접 써보고 가장 편한 것을 쓰세요!',
+      },
+    ],
+  },
+  {
+    slug: 'ai-image',
+    title: 'AI로 이미지 만들기',
+    description: '텍스트만 입력하면 멋진 그림이 생성됩니다. 처음 시작하는 법을 알아보세요.',
+    icon: '🎨',
+    difficulty: 1,
+    level: '초급',
+    readTime: 8,
+    tags: ['이미지생성', 'DALL-E', '미드저니'],
+    steps: [
+      {
+        title: '어떤 도구를 쓸까?',
+        content: '• ChatGPT Plus (유료): DALL-E 3 내장, 가장 쉬움\n• Bing Image Creator (무료): DALL-E 기반, 무료로 사용 가능\n• Midjourney (유료): 가장 퀄리티 높음, Discord에서 사용',
+        tip: '처음이라면 무료인 Bing Image Creator(bing.com/images/create)부터 시작하세요!',
+      },
+      {
+        title: 'Bing Image Creator 시작하기',
+        content: 'bing.com/images/create 접속 → 마이크로소프트 계정으로 로그인 → 입력창에 원하는 이미지 설명 입력',
+      },
+      {
+        title: '이미지 프롬프트 작성하기',
+        content: '영어로 쓰면 더 좋지만 한국어도 됩니다.\n예: "귀여운 고양이가 우주에서 커피를 마시는 모습, 수채화 스타일"',
+        tip: '스타일을 추가하면 훨씬 좋아져요: 수채화, 유화, 사진, 만화, 픽셀아트 등',
+      },
+      {
+        title: '결과물 저장하기',
+        content: '마음에 드는 이미지를 클릭하고 다운로드 버튼을 누르면 저장됩니다. 4가지 버전이 생성되니 그 중 최고를 골라보세요!',
+      },
+    ],
+  },
+
+  // ── 중급 ─────────────────────────────────────────────────────
+  {
     slug: 'good-prompt',
     title: '좋은 프롬프트 쓰는 법',
     description: 'AI에게 질문을 잘해야 답이 좋아집니다. 핵심 노하우를 알아보세요.',
     icon: '✍️',
-    difficulty: 1,
+    difficulty: 2,
+    level: '중급',
     readTime: 7,
     tags: ['프롬프트', '활용법', '팁'],
     steps: [
@@ -75,68 +147,75 @@ export const guides: Guide[] = [
     ],
   },
   {
-    slug: 'ai-image',
-    title: 'AI로 이미지 만들기',
-    description: '텍스트만 입력하면 멋진 그림이 생성됩니다. 처음 시작하는 법을 알아보세요.',
-    icon: '🎨',
+    slug: 'ai-music',
+    title: 'AI로 나만의 노래 만들기 (Suno/Udio)',
+    description: '가사와 장르만 입력하면 진짜 가수가 부른 것 같은 완성된 노래가 탄생합니다.',
+    icon: '🎵',
     difficulty: 2,
+    level: '중급',
     readTime: 8,
-    tags: ['이미지생성', 'DALL-E', '미드저니'],
+    tags: ['Suno', 'Udio', '음악생성', 'AI작곡'],
     steps: [
       {
-        title: '어떤 도구를 쓸까?',
-        content: '• ChatGPT Plus (유료): DALL-E 3 내장, 가장 쉬움\n• Bing Image Creator (무료): DALL-E 기반, 무료로 사용 가능\n• Midjourney (유료): 가장 퀄리티 높음, Discord에서 사용',
-        tip: '처음이라면 무료인 Bing Image Creator(bing.com/images/create)부터 시작하세요!',
+        title: 'Suno AI 가입하기',
+        content: 'suno.com 접속 → Sign in 클릭 → 구글 또는 디스코드 계정으로 로그인\n무료 플랜: 하루 5곡 생성 가능 (크레딧 기반)',
+        tip: 'Udio(udio.com)도 비슷한 서비스입니다. 둘 다 써보고 더 마음에 드는 것을 쓰세요!',
       },
       {
-        title: 'Bing Image Creator 시작하기',
-        content: 'bing.com/images/create 접속 → 마이크로소프트 계정으로 로그인 → 입력창에 원하는 이미지 설명 입력',
+        title: '노래 스타일 설정하기',
+        content: '"Style of Music" 입력란에 원하는 음악 장르를 영어로 적어주세요.\n예시:\n• "Korean ballad, emotional piano"\n• "K-pop, upbeat, synth"\n• "Lo-fi hip hop, chill, rain sounds"',
+        tip: '한국어 가사를 만들고 싶다면 "Korean lyrics" 를 꼭 추가해 주세요.',
       },
       {
-        title: '이미지 프롬프트 작성하기',
-        content: '영어로 쓰면 더 좋지만 한국어도 됩니다.\n예: "귀여운 고양이가 우주에서 커피를 마시는 모습, 수채화 스타일"',
-        tip: '스타일을 추가하면 훨씬 좋아져요: 수채화, 유화, 사진, 만화, 픽셀아트 등',
+        title: '가사 입력하기 (선택)',
+        content: '"Lyrics" 란에 직접 가사를 입력하거나, 비워두면 AI가 알아서 만들어 줍니다.\n\n[Verse]\n달빛 아래 너를 기다려\n\n[Chorus]\n사라지지 않는 기억처럼',
+        tip: '[Verse], [Chorus], [Bridge] 태그로 구성을 지정하면 훨씬 자연스러운 노래가 나와요.',
       },
       {
-        title: '결과물 저장하기',
-        content: '마음에 드는 이미지를 클릭하고 다운로드 버튼을 누르면 저장됩니다. 4가지 버전이 생성되니 그 중 최고를 골라보세요!',
+        title: 'Create 버튼 눌러서 생성하기',
+        content: 'Create 버튼을 누르면 약 30초~1분 내에 2가지 버전의 노래가 생성됩니다.\n마음에 드는 버전을 선택하고 다운로드 또는 공유 버튼을 누르세요!',
       },
     ],
   },
   {
-    slug: 'ai-tools-compare',
-    title: 'ChatGPT vs Claude vs Gemini 비교',
-    description: '3대 AI의 장단점을 비교해서 나에게 맞는 AI를 찾아보세요.',
-    icon: '⚖️',
-    difficulty: 1,
-    readTime: 6,
-    tags: ['비교', 'ChatGPT', 'Claude', 'Gemini'],
+    slug: 'ai-video',
+    title: 'AI로 영상 만들기 (Runway/HeyGen)',
+    description: '이미지나 텍스트를 넣으면 AI가 실제처럼 움직이는 영상을 만들어 줍니다.',
+    icon: '🎥',
+    difficulty: 2,
+    level: '중급',
+    readTime: 10,
+    tags: ['Runway', 'HeyGen', '영상생성', 'AI영상'],
     steps: [
       {
-        title: 'ChatGPT — 가장 유명한 만능 AI',
-        content: '✅ 장점: 가장 많이 사용됨, 자료와 커뮤니티 풍부, 이미지 생성(Plus) 가능\n❌ 단점: 무료 버전은 가끔 막힘, 최신 정보 부족할 때 있음\n💡 추천 대상: AI 처음 쓰는 분, 뭐든 다 해보고 싶은 분',
+        title: '어떤 도구를 쓸까?',
+        content: '• Runway Gen-2 (runwayml.com): 텍스트/이미지 → 영상. 특수효과, 영화 느낌에 강함\n• HeyGen (heygen.com): 사진 한 장으로 말하는 아바타 영상 제작. 발표자료, 유튜브에 최적\n• CapCut AI (capcut.com): 간단한 영상 편집 + AI 자막 + 효과',
+        tip: '유튜브나 SNS용 짧은 영상이라면 HeyGen이 가장 쉽고 빠릅니다!',
       },
       {
-        title: 'Claude — 글쓰기와 분석의 왕',
-        content: '✅ 장점: 긴 문서 분석 탁월, 글쓰기 품질 최상, 한국어 매우 자연스러움\n❌ 단점: 이미지 생성 불가, 인터넷 검색 제한적\n💡 추천 대상: 긴 문서 분석, 좋은 글 쓰고 싶은 분',
+        title: 'HeyGen으로 아바타 영상 만들기',
+        content: '1. heygen.com 접속 → 무료 가입\n2. "Create Video" 클릭 → "Avatar" 선택\n3. 원하는 아바타 캐릭터 선택 (또는 내 사진 업로드)\n4. 텍스트 입력: 아바타가 말할 스크립트 작성\n5. 언어/목소리 선택 → Generate 클릭',
+        tip: '무료 플랜으로 월 1분짜리 영상 1개를 만들 수 있어요.',
       },
       {
-        title: 'Gemini — 구글과 연동되는 AI',
-        content: '✅ 장점: 최신 정보 검색 가능, 구글 문서/드라이브 연동, 무료\n❌ 단점: 창의적 글쓰기는 상대적으로 약함\n💡 추천 대상: 구글 서비스 많이 쓰는 분, 최신 정보가 중요한 분',
+        title: 'Runway로 이미지를 영상으로 변환하기',
+        content: '1. runwayml.com 접속 → 가입\n2. "Gen-2" 선택\n3. 이미지 업로드 또는 텍스트로 설명 입력\n예: "A purple nebula slowly expanding in space, cinematic"\n4. 4초 영상 생성 → 마음에 들면 연장 가능',
       },
       {
-        title: '어떤 걸 써야 할까?',
-        content: '처음이라면: ChatGPT\n글쓰기/문서분석: Claude\n최신 정보 검색: Gemini 또는 Perplexity\n이미지 만들기: DALL-E(ChatGPT Plus) 또는 Midjourney',
-        tip: '다 무료로 가입할 수 있으니 직접 써보고 가장 편한 것을 쓰세요!',
+        title: '영상 다운로드 및 활용',
+        content: '생성된 영상은 MP4 형태로 다운로드 가능합니다.\n• 유튜브 쇼츠 / 인스타 릴스에 업로드\n• CapCut에서 음악/자막 추가 편집\n• 발표자료에 삽입',
       },
     ],
   },
+
+  // ── 심화 ─────────────────────────────────────────────────────
   {
     slug: 'antigravity-guide',
     title: 'Antigravity AI 코딩 도우미 사용법',
     description: 'VS Code에서 AI가 코드를 직접 짜줍니다. 코딩 경험이 없어도 OK!',
     icon: '🚀',
-    difficulty: 2,
+    difficulty: 3,
+    level: '심화',
     readTime: 8,
     tags: ['Antigravity', 'AI코딩', 'VS Code'],
     steps: [
@@ -172,7 +251,8 @@ export const guides: Guide[] = [
     title: 'GitHub Copilot 시작하기',
     description: '코드 자동완성 AI. VS Code에서 코드를 반만 쓰면 나머지를 채워줍니다.',
     icon: '🐙',
-    difficulty: 2,
+    difficulty: 3,
+    level: '심화',
     readTime: 7,
     tags: ['GitHub', 'Copilot', 'AI코딩'],
     steps: [
@@ -193,6 +273,37 @@ export const guides: Guide[] = [
         title: 'VS Code에서 활성화하기',
         content: '1. VS Code Extensions에서 "GitHub Copilot" 설치\n2. VS Code 오른쪽 아래 Copilot 아이콘 클릭 → GitHub 계정으로 로그인\n3. 이제 코드를 쓰면 회색 글씨로 제안이 나타남\n4. Tab 키를 누르면 제안 수락, Esc로 거절',
         tip: '제안이 마음에 들면 Tab, 다른 제안을 보려면 Alt + ] 를 누르세요.',
+      },
+    ],
+  },
+  {
+    slug: 'ai-automation',
+    title: 'AI로 업무 자동화하기 (Zapier/Make)',
+    description: '반복되는 업무를 AI 봇이 알아서 처리하게 만들어 보세요.',
+    icon: '⚡',
+    difficulty: 3,
+    level: '심화',
+    readTime: 12,
+    tags: ['자동화', 'Zapier', 'Make', '업무효율'],
+    steps: [
+      {
+        title: '업무 자동화가 뭔가요?',
+        content: '자동화란 "A가 발생하면 B를 자동으로 실행해"라는 규칙을 만드는 것입니다.\n\n실제 예시:\n• 이메일이 오면 → 슬랙 채널에 자동 알림\n• 구글 폼 응답이 오면 → 구글 시트에 자동 저장 + 자동 답장 이메일 발송\n• 유튜브에 새 영상이 올라오면 → 트위터에 자동 공유',
+        tip: 'Zapier(zapier.com)와 Make(make.com) 둘 다 무료 플랜이 있어요.',
+      },
+      {
+        title: 'Zapier 가입 및 첫 Zap 만들기',
+        content: '1. zapier.com 접속 → 무료 가입\n2. "Create Zap" 클릭\n3. Trigger(시작 조건) 선택: 예) "Gmail — New Email"\n4. Action(실행할 작업) 선택: 예) "Slack — Send Message"\n5. 두 앱을 연결하고 테스트 → 켜기!',
+      },
+      {
+        title: 'AI를 자동화에 연결하기',
+        content: 'Zapier에서 "ChatGPT by OpenAI" 액션을 추가하면:\n\n이메일 수신 → ChatGPT로 내용 요약 → 슬랙에 요약본 전송\n구글 폼 답변 수신 → ChatGPT로 자동 답장 문구 생성 → 이메일 발송\n\n이처럼 AI를 자동화 중간에 끼워 넣어 더 스마트한 자동화가 가능합니다.',
+        tip: 'OpenAI API 키가 필요합니다. platform.openai.com에서 발급받으세요.',
+      },
+      {
+        title: '실전 자동화 예시 따라하기',
+        content: '📧 고객 문의 자동화:\n1. 구글 폼으로 문의 접수\n2. Zapier가 ChatGPT에게 답변 초안 생성 요청\n3. 초안을 담당자에게 이메일로 자동 전달\n4. 담당자가 수정 후 발송\n\n⏱ 절약 시간: 답변 작성 15분 → 검토 2분으로 단축!',
+        tip: '처음에는 간단한 것부터: 이메일 수신 → 노션에 자동 저장 처럼 2단계 자동화부터 시작하세요.',
       },
     ],
   },
