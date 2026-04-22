@@ -13,6 +13,7 @@ export interface CommunityResource {
   color: string;
   icon: string;
   usageKo: string;
+  uses: number;
 }
 
 export const communityResources: CommunityResource[] = [
@@ -30,6 +31,7 @@ export const communityResources: CommunityResource[] = [
     color: 'from-black to-gray-800',
     icon: '▲',
     usageKo: '.github/copilot-instructions.md 파일에 붙여넣으면 GitHub Copilot이 이 규칙에 따라 코드를 작성해 줍니다.',
+    uses: 24500,
   },
   {
     id: 'typescript-strict',
@@ -44,6 +46,7 @@ export const communityResources: CommunityResource[] = [
     color: 'from-blue-700 to-blue-900',
     icon: 'TS',
     usageKo: 'TypeScript 프로젝트에서 any 타입 사용을 줄이고 타입 오류를 줄여줍니다.',
+    uses: 18200,
   },
   {
     id: 'unit-test-generator',
@@ -58,6 +61,7 @@ export const communityResources: CommunityResource[] = [
     color: 'from-green-700 to-emerald-800',
     icon: '🧪',
     usageKo: '.github/prompts/generate-tests.prompt.md 로 저장하고 Copilot Chat에서 /generate-tests 로 실행.',
+    uses: 32100,
   },
   {
     id: 'fullstack-agent',
@@ -73,6 +77,7 @@ export const communityResources: CommunityResource[] = [
     color: 'from-rose-700 to-pink-800',
     icon: '👨‍💻',
     usageKo: '.github/agents/ 폴더에 저장하면 Copilot이 이 역할로 코드 작업을 도와줍니다.',
+    uses: 45600,
   },
   {
     id: 'ci-cd-workflow',
@@ -87,6 +92,7 @@ export const communityResources: CommunityResource[] = [
     color: 'from-teal-700 to-cyan-800',
     icon: '🔄',
     usageKo: '.github/workflows/ 폴더에 추가하면 PR 생성 시 자동으로 빌드/테스트가 실행됩니다.',
+    uses: 15400,
   },
 ];
 

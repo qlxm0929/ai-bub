@@ -15,12 +15,18 @@ function timeAgo(dateStr: string) {
   return `${Math.floor(diff / 86400)}일 전`;
 }
 
+function formatUses(uses: number) {
+  if (uses >= 1000) return `${(uses / 1000).toFixed(1)}k`;
+  return uses;
+}
+
 // ── 추천 프롬프트 사이드 패널 ─────────────────────────
 function PromptSidebar() {
   const [activeTab, setActiveTab] = useState<'prompts' | 'github'>('prompts');
   const [promptCat, setPromptCat] = useState('전체');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortOrder, setSortOrder] = useState<'popular' | 'default'>('popular');
 
   const filteredPrompts = recommendedPrompts.filter(p => {
     const matchCat = promptCat === '전체' || p.category === promptCat;
@@ -29,14 +35,14 @@ function PromptSidebar() {
                         p.description.toLowerCase().includes(searchLower) || 
                         p.tags.some(t => t.toLowerCase().includes(searchLower));
     return matchCat && matchSearch;
-  });
+  }).sort((a, b) => sortOrder === 'popular' ? b.uses - a.uses : 0);
 
   const filteredResources = communityResources.filter(r => {
     const searchLower = searchQuery.toLowerCase();
     return r.titleKo.toLowerCase().includes(searchLower) || 
            r.descriptionKo.toLowerCase().includes(searchLower) || 
            r.tags.some(t => t.toLowerCase().includes(searchLower));
-  });
+  }).sort((a, b) => sortOrder === 'popular' ? b.uses - a.uses : 0);
 
   const handleCopy = (id: string, text: string) => {
     navigator.clipboard.writeText(text);
@@ -59,8 +65,8 @@ function PromptSidebar() {
           ))}
         </div>
 
-        {/* 검색창 */}
-        <div className="p-3 border-b border-white/5 bg-black/20">
+        {/* 검색창 및 정렬 */}
+        <div className="p-3 border-b border-white/5 bg-black/20 space-y-2">
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs">🔍</span>
             <input
@@ -70,6 +76,18 @@ function PromptSidebar() {
               onChange={e => setSearchQuery(e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-md pl-8 pr-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
             />
+          </div>
+          <div className="flex justify-end gap-1">
+            <button 
+              onClick={() => setSortOrder('popular')}
+              className={`px-2 py-1 rounded text-[10px] transition-colors ${sortOrder === 'popular' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}>
+              🔥 인기순
+            </button>
+            <button 
+              onClick={() => setSortOrder('default')}
+              className={`px-2 py-1 rounded text-[10px] transition-colors ${sortOrder === 'default' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}>
+              기본순
+            </button>
           </div>
         </div>
 
@@ -98,7 +116,10 @@ function PromptSidebar() {
                   <div className="flex items-start justify-between gap-2 mb-1.5">
                     <div className="flex items-center gap-2">
                       <span className="text-base">{p.categoryIcon}</span>
-                      <h3 className="text-xs font-bold text-white">{p.title}</h3>
+                      <div>
+                        <h3 className="text-xs font-bold text-white">{p.title}</h3>
+                        <p className="text-[9px] text-pink-400/80 mt-0.5">🔥 {formatUses(p.uses)}명 사용</p>
+                      </div>
                     </div>
                     <button
                       onClick={() => handleCopy(p.id, p.prompt)}
@@ -154,6 +175,7 @@ function PromptSidebar() {
                   <div className="min-w-0">
                     <span className="badge badge-purple text-[9px] mb-0.5 block w-fit">{r.typeLabel}</span>
                     <h3 className="text-xs font-bold text-white group-hover:text-purple-300 transition-colors truncate">{r.titleKo}</h3>
+                    <p className="text-[9px] text-pink-400/80 mt-0.5">🔥 {formatUses(r.uses)}명 사용</p>
                   </div>
                 </div>
                 <p className="text-[10px] text-gray-500 leading-relaxed mb-2 line-clamp-2">{r.descriptionKo}</p>

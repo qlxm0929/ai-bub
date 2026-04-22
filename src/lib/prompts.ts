@@ -6,6 +6,7 @@ export interface Prompt {
   category: string;
   categoryIcon: string;
   tags: string[];
+  uses: number;
 }
 
 export const promptCategories = ['전체', '글쓰기', '업무', '학습', '코딩', '이미지'];
@@ -20,6 +21,7 @@ export const recommendedPrompts: Prompt[] = [
     category: '글쓰기',
     categoryIcon: '✉️',
     tags: ['이메일', '업무', '비즈니스'],
+    uses: 12450,
   },
   {
     id: 'blog-post',
@@ -29,6 +31,7 @@ export const recommendedPrompts: Prompt[] = [
     category: '글쓰기',
     categoryIcon: '📝',
     tags: ['블로그', 'SEO', '콘텐츠'],
+    uses: 9820,
   },
   {
     id: 'self-intro',
@@ -38,6 +41,7 @@ export const recommendedPrompts: Prompt[] = [
     category: '글쓰기',
     categoryIcon: '📄',
     tags: ['자기소개서', '취업', '입시'],
+    uses: 5430,
   },
   // 업무
   {
@@ -48,6 +52,7 @@ export const recommendedPrompts: Prompt[] = [
     category: '업무',
     categoryIcon: '📋',
     tags: ['회의록', '요약', '생산성'],
+    uses: 15600,
   },
   {
     id: 'report-template',
@@ -57,6 +62,7 @@ export const recommendedPrompts: Prompt[] = [
     category: '업무',
     categoryIcon: '📊',
     tags: ['보고서', '기획', '컨설팅'],
+    uses: 8210,
   },
   // 학습
   {
@@ -67,6 +73,7 @@ export const recommendedPrompts: Prompt[] = [
     category: '학습',
     categoryIcon: '🎓',
     tags: ['개념설명', '학습', '공부'],
+    uses: 11200,
   },
   {
     id: 'quiz-maker',
@@ -76,6 +83,7 @@ export const recommendedPrompts: Prompt[] = [
     category: '학습',
     categoryIcon: '🧩',
     tags: ['퀴즈', '복습', '시험준비'],
+    uses: 4300,
   },
   // 코딩
   {
@@ -86,6 +94,7 @@ export const recommendedPrompts: Prompt[] = [
     category: '코딩',
     categoryIcon: '💻',
     tags: ['코드리뷰', '개발', '디버깅'],
+    uses: 21500,
   },
   {
     id: 'bug-fix',
@@ -95,6 +104,7 @@ export const recommendedPrompts: Prompt[] = [
     category: '코딩',
     categoryIcon: '🐛',
     tags: ['디버깅', '에러해결', '개발'],
+    uses: 18900,
   },
   // 이미지
   {
@@ -105,6 +115,7 @@ export const recommendedPrompts: Prompt[] = [
     category: '이미지',
     categoryIcon: '🎨',
     tags: ['이미지생성', '초상화', '캐릭터'],
+    uses: 7600,
   },
   {
     id: 'image-wallpaper',
@@ -114,5 +125,6 @@ export const recommendedPrompts: Prompt[] = [
     category: '이미지',
     categoryIcon: '🌌',
     tags: ['배경화면', '우주', '판타지'],
+    uses: 5100,
   },
 ];
