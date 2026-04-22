@@ -11,6 +11,7 @@ export interface Guide {
     title: string;
     content: string;
     tip?: string;
+    image?: string;
   }[];
 }
 
@@ -321,6 +322,7 @@ export const guides: Guide[] = [
         title: '1. 프롬프트 복사하기',
         content: '커뮤니티 우측 사이드바(또는 하단)에 있는 "추천 프롬프트" 목록에서 마음에 드는 프롬프트를 찾습니다.\n우측의 **[복사]** 버튼을 누르면 프롬프트 내용이 클립보드에 저장됩니다.',
         tip: '인기순(🔥)으로 정렬하면 다른 사람들이 많이 쓰는 유용한 프롬프트를 쉽게 찾을 수 있어요!',
+        image: '/guides/prompt_copy_ui.png',
       },
       {
         title: '2. AI 서비스 열기',
@@ -330,6 +332,7 @@ export const guides: Guide[] = [
         title: '3. 괄호 [ ] 안의 내용 수정하기',
         content: '복사된 프롬프트에는 [핵심 내용 입력], [주제 입력] 처럼 대괄호로 표시된 부분이 있습니다.\n이 부분을 지우고 **내가 원하는 실제 내용**으로 바꿔서 입력해 주세요.\n\n예시:\n- 수정 전: 주제: [주제 입력]\n- 수정 후: 주제: 인공지능이 마케팅에 미치는 영향',
         tip: '대괄호 안의 내용을 최대한 구체적으로 적어줄수록 AI가 내 입맛에 딱 맞는 답변을 줍니다.',
+        image: '/guides/ai_edit_ui.png',
       },
       {
         title: '4. 답변 확인하고 이어서 요청하기',
@@ -354,11 +357,13 @@ export const guides: Guide[] = [
       {
         title: '2. GitHub 리포지토리 방문',
         content: '마음에 드는 리소스를 클릭하면 원본 **GitHub 사이트**로 이동합니다.\n대부분의 리소스는 마크다운(.md) 형태의 파일로 되어 있습니다.\n해당 파일의 내용을 복사하거나 파일을 다운로드 받으세요.',
+        image: '/guides/github_repo_ui.png',
       },
       {
         title: '3. 인스트럭션(.github/copilot-instructions.md) 적용하기',
         content: '인스트럭션(규칙)을 적용하려면 내 코드 프로젝트 폴더 최상단에 `.github` 폴더를 만들고, 그 안에 `copilot-instructions.md` 파일을 생성합니다.\n\n그리고 복사해 온 인스트럭션 내용을 이 파일 안에 붙여넣고 저장하세요.',
         tip: '파일을 저장한 후부터는 GitHub Copilot Chat 등에서 코드 제안을 할 때 이 규칙을 자동으로 따르게 됩니다!',
+        image: '/guides/vscode_github_folder.png',
       },
       {
         title: '4. 에이전트(.github/agents/) 적용하기',

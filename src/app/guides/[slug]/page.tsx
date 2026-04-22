@@ -46,6 +46,12 @@ export default async function GuideDetailPage({ params }: { params: Promise<{ sl
               {step.title}
             </h2>
             <div className="text-gray-300 whitespace-pre-wrap leading-relaxed ml-11">
+              {step.image && (
+                <div className="mb-6 rounded-xl overflow-hidden border border-white/10 relative w-full" style={{ maxHeight: '400px' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={step.image} alt={step.title} className="w-full h-full object-cover" />
+                </div>
+              )}
               {step.content}
             </div>
             {step.tip && (
