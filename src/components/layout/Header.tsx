@@ -11,7 +11,7 @@ export default function Header() {
     { href: '/news', label: 'AI 뉴스' },
     { href: '/tools', label: '필수 도구' },
     { href: '/guides', label: '가이드' },
-    { href: '/community', label: '커뮤니티' },
+    { href: '/community', label: '🙌 게시판' },
   ];
 
   return (
