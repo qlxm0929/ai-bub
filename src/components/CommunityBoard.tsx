@@ -91,7 +91,6 @@ function PromptSidebar() {
                       <span key={t} className="text-[9px] bg-white/5 text-gray-600 px-1.5 py-0.5 rounded">#{t}</span>
                     ))}
                   </div>
-                  </div>
                 </div>
               ))}
 
