@@ -20,10 +20,23 @@ function PromptSidebar() {
   const [activeTab, setActiveTab] = useState<'prompts' | 'github'>('prompts');
   const [promptCat, setPromptCat] = useState('전체');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const filtered = promptCat === '전체'
-    ? recommendedPrompts
-    : recommendedPrompts.filter(p => p.category === promptCat);
+  const filteredPrompts = recommendedPrompts.filter(p => {
+    const matchCat = promptCat === '전체' || p.category === promptCat;
+    const searchLower = searchQuery.toLowerCase();
+    const matchSearch = p.title.toLowerCase().includes(searchLower) || 
+                        p.description.toLowerCase().includes(searchLower) || 
+                        p.tags.some(t => t.toLowerCase().includes(searchLower));
+    return matchCat && matchSearch;
+  });
+
+  const filteredResources = communityResources.filter(r => {
+    const searchLower = searchQuery.toLowerCase();
+    return r.titleKo.toLowerCase().includes(searchLower) || 
+           r.descriptionKo.toLowerCase().includes(searchLower) || 
+           r.tags.some(t => t.toLowerCase().includes(searchLower));
+  });
 
   const handleCopy = (id: string, text: string) => {
     navigator.clipboard.writeText(text);
@@ -46,6 +59,20 @@ function PromptSidebar() {
           ))}
         </div>
 
+        {/* 검색창 */}
+        <div className="p-3 border-b border-white/5 bg-black/20">
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs">🔍</span>
+            <input
+              type="text"
+              placeholder={activeTab === 'prompts' ? '프롬프트 검색 (예: 블로그, 이메일)' : '리소스 검색 (예: Next.js, 테스트)'}
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              className="w-full bg-white/5 border border-white/10 rounded-md pl-8 pr-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+            />
+          </div>
+        </div>
+
         {activeTab === 'prompts' ? (
           <div>
             {/* 카테고리 필터 */}
@@ -62,7 +89,11 @@ function PromptSidebar() {
 
             {/* 프롬프트 리스트 */}
             <div className="divide-y divide-white/5 max-h-[600px] overflow-y-auto">
-              {filtered.map(p => (
+              {filteredPrompts.length === 0 ? (
+                <div className="p-8 text-center text-gray-500 text-xs">
+                  검색 결과가 없습니다.
+                </div>
+              ) : filteredPrompts.map(p => (
                 <div key={p.id} className="p-4 group hover:bg-white/2 transition-colors">
                   <div className="flex items-start justify-between gap-2 mb-1.5">
                     <div className="flex items-center gap-2">
@@ -109,7 +140,11 @@ function PromptSidebar() {
         ) : (
           /* GitHub 리소스 */
           <div className="divide-y divide-white/5 max-h-[660px] overflow-y-auto">
-            {communityResources.map(r => (
+            {filteredResources.length === 0 ? (
+              <div className="p-8 text-center text-gray-500 text-xs">
+                검색 결과가 없습니다.
+              </div>
+            ) : filteredResources.map(r => (
               <a key={r.id} href={r.githubUrl} target="_blank" rel="noopener noreferrer"
                 className="block p-4 hover:bg-white/3 transition-colors group">
                 <div className="flex items-center gap-3 mb-2">
