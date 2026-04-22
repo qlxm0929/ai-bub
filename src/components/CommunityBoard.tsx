@@ -91,8 +91,20 @@ function PromptSidebar() {
                       <span key={t} className="text-[9px] bg-white/5 text-gray-600 px-1.5 py-0.5 rounded">#{t}</span>
                     ))}
                   </div>
+                  </div>
                 </div>
               ))}
+
+              {/* 프롬프트 학습 가이드 배너 */}
+              <div className="p-4 bg-purple-900/10 hover:bg-purple-900/20 transition-colors">
+                <a href="/guides/good-prompt" className="flex items-center justify-between group">
+                  <div>
+                    <h4 className="text-xs font-bold text-purple-300 mb-1">프롬프트 작성이 어렵다면?</h4>
+                    <p className="text-[10px] text-purple-400/80">좋은 프롬프트 쓰는 법 가이드 보기</p>
+                  </div>
+                  <span className="text-purple-400 group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+              </div>
             </div>
           </div>
         ) : (
@@ -121,6 +133,17 @@ function PromptSidebar() {
                 </div>
               </a>
             ))}
+
+            {/* 더 많은 리소스 배너 */}
+            <div className="p-4 bg-cyan-900/10 hover:bg-cyan-900/20 transition-colors">
+              <a href="https://github.com/awesome-copilot/awesome-copilot" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between group">
+                <div>
+                  <h4 className="text-xs font-bold text-cyan-300 mb-1">더 많은 리소스를 찾고 계신가요?</h4>
+                  <p className="text-[10px] text-cyan-400/80">Awesome Copilot 전체 목록 보기</p>
+                </div>
+                <span className="text-cyan-400 group-hover:translate-x-1 transition-transform">↗</span>
+              </a>
+            </div>
           </div>
         )}
       </div>
