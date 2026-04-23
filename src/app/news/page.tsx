@@ -6,7 +6,7 @@ import { youtubeChannels, popularSearches } from '@/lib/youtube';
 
 const SOURCES_KO = ['ZDNet 코리아', 'IT동아', '더에이아이'];
 const SOURCES_EN = ['테크크런치', '더 버지', '벤처비트'];
-const SOURCES_BLOG = ['카카오 테크', '토스 테크', '네이버 D2'];
+const SOURCES_BLOG = ['카카오 테크', '토스 테크', '우아한형제들'];
 
 type Tab = 'all' | 'ko' | 'en' | 'blog' | 'youtube';
 
@@ -47,9 +47,14 @@ export default function NewsPage() {
   }, []);
 
   const filtered = news.filter((item) => {
-    if (tab === 'ko') return item.isKorean && !item.isBlog;
-    if (tab === 'en') return !item.isKorean && !item.isBlog;
-    if (tab === 'blog') return item.isBlog;
+    let tabOk = false;
+    if (tab === 'all') tabOk = true;
+    else if (tab === 'ko') tabOk = item.isKorean && !item.isBlog;
+    else if (tab === 'en') tabOk = !item.isKorean && !item.isBlog;
+    else if (tab === 'blog') tabOk = !!item.isBlog;
+
+    if (!tabOk) return false;
+
     const srcOk = source === '전체' || item.sourceKo === source;
     return srcOk;
   });
@@ -122,10 +127,10 @@ export default function NewsPage() {
             </div>
           )}
 
-          {tab === 'all' && (
+          {tab !== 'youtube' && (
             <div className="flex flex-wrap gap-2 mb-6">
               <span className="text-xs text-gray-500 self-center">출처:</span>
-              {['전체', ...SOURCES_KO, ...SOURCES_EN, ...SOURCES_BLOG].map((s) => (
+              {['전체', ...(tab === 'all' ? [...SOURCES_KO, ...SOURCES_EN, ...SOURCES_BLOG] : tab === 'ko' ? SOURCES_KO : tab === 'en' ? SOURCES_EN : SOURCES_BLOG)].map((s) => (
                 <button
                   key={s}
                   onClick={() => setSource(s)}

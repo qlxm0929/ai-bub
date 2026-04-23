@@ -78,9 +78,9 @@ const feeds = [
     isBlog: true,
   },
   {
-    url: 'https://d2.naver.com/d2.atom',
-    source: 'Naver D2',
-    sourceKo: '네이버 D2',
+    url: 'https://techblog.woowahan.com/feed/',
+    source: 'Woowahan Tech',
+    sourceKo: '우아한형제들',
     category: '기술 블로그',
     isKorean: true,
     isBlog: true,
