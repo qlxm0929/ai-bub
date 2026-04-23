@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import type { CommunityPost } from '@/lib/supabase';
 import { recommendedPrompts, promptCategories } from '@/lib/prompts';
 import { communityResources } from '@/lib/community';
+import Link from 'next/link';
 
 const POST_CATEGORIES = ['전체', '💡 AI 팁', '🔮 프롬프트 공유', '📰 뉴스/발견', '❓ 질문', '🛠️ 도구 추천', '💬 자유'];
 
@@ -148,13 +149,13 @@ function PromptSidebar() {
 
               {/* 프롬프트 학습 가이드 배너 */}
               <div className="p-4 bg-purple-900/10 hover:bg-purple-900/20 transition-colors">
-                <a href="/guides/community-prompt-guide" className="flex items-center justify-between group">
+                <Link href="/guides/community-prompt-guide" className="flex items-center justify-between group">
                   <div>
                     <h4 className="text-xs font-bold text-purple-300 mb-1">이 프롬프트들을 어떻게 쓰나요?</h4>
                     <p className="text-[10px] text-purple-400/80">추천 프롬프트 200% 활용 가이드 보기</p>
                   </div>
                   <span className="text-purple-400 group-hover:translate-x-1 transition-transform">→</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -192,13 +193,13 @@ function PromptSidebar() {
 
             {/* 리소스 사용법 가이드 배너 */}
             <div className="p-4 bg-purple-900/10 hover:bg-purple-900/20 transition-colors border-b border-white/5">
-              <a href="/guides/community-resource-guide" className="flex items-center justify-between group">
+              <Link href="/guides/community-resource-guide" className="flex items-center justify-between group">
                 <div>
                   <h4 className="text-xs font-bold text-purple-300 mb-1">GitHub 리소스를 어떻게 적용하나요?</h4>
                   <p className="text-[10px] text-purple-400/80">VS Code / Copilot에 리소스 적용하는 법</p>
                 </div>
                 <span className="text-purple-400 group-hover:translate-x-1 transition-transform">→</span>
-              </a>
+              </Link>
             </div>
 
             {/* 더 많은 리소스 배너 */}
@@ -232,14 +233,17 @@ export default function CommunityBoard() {
   const formRef = useRef<HTMLDivElement>(null);
 
   const fetchPosts = async (cat = category, sortOrder = sort) => {
-    setLoading(true);
+    setTimeout(() => setLoading(true), 0);
     const res = await fetch(`/api/posts?category=${encodeURIComponent(cat)}&sort=${sortOrder}`);
     const data = await res.json();
     setPosts(data.posts || []);
     setLoading(false);
   };
 
-  useEffect(() => { fetchPosts(); }, [category, sort]);
+  useEffect(() => { 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchPosts(); 
+  }, [category, sort]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

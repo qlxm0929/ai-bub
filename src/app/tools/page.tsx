@@ -12,7 +12,7 @@ export default function ToolsPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const fetchToolsData = () => {
-    setIsRefreshing(true);
+    setTimeout(() => setIsRefreshing(true), 0);
     fetch('/api/newtools')
       .then((r) => r.json())
       .then((data) => {

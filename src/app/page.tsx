@@ -305,7 +305,7 @@ export default async function HomePage() {
               <div className="badge badge-purple mb-2">AI 코딩 도우미</div>
               <h2 className="text-2xl font-bold text-white mb-2">Antigravity로 코드 짜기</h2>
               <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                VS Code에서 "이런 기능 만들어줘"라고 말하면 AI가 직접 코드를 작성합니다.<br />
+                VS Code에서 &quot;이런 기능 만들어줘&quot;라고 말하면 AI가 직접 코드를 작성합니다.<br />
                 코딩 경험이 없어도 누구나 앱을 만들 수 있어요.
               </p>
               <Link href="/guides/antigravity-guide" className="btn-primary text-sm px-6 py-2.5 inline-block">

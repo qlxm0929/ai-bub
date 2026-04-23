@@ -19,7 +19,7 @@ export default function NewsPage() {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const fetchNewsData = () => {
-    setIsRefreshing(true);
+    setTimeout(() => setIsRefreshing(true), 0);
     fetch('/api/news')
       .then((r) => r.json())
       .then((data) => {
