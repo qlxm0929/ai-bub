@@ -192,6 +192,37 @@ export default async function HomePage() {
         )}
       </section>
 
+      {/* New Tools from Product Hunt */}
+      {newTools.length > 0 && (
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-white/5">
+          <div className="flex items-end justify-between mb-8">
+            <div>
+              <div className="badge badge-pink mb-2">🔥 최신 출시</div>
+              <h2 className="section-title">방금 나온 따끈따끈한 AI 도구</h2>
+              <p className="section-subtitle">전 세계에서 방금 출시된 최신 AI 서비스들을 만나보세요</p>
+            </div>
+            <Link href="/tools" className="text-sm text-purple-400 hover:text-purple-300 transition-colors font-medium">
+              더 보기 →
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {newTools.slice(0, 4).map((tool, i) => (
+              <a key={tool.id} href={tool.link} target="_blank" rel="noopener noreferrer"
+                className="glass-card p-5 group cursor-pointer border border-pink-500/10 hover:border-pink-500/30" style={{ animationDelay: `${i * 0.08}s` }}>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="badge badge-pink text-[10px]">NEW</span>
+                  <span className="text-xs text-gray-500">{new Date(tool.pubDate).toLocaleDateString('ko-KR')}</span>
+                </div>
+                <h3 className="font-bold text-white mb-1 group-hover:text-pink-400 transition-colors line-clamp-1">{tool.name}</h3>
+                <p className="text-xs font-medium text-pink-300/80 mb-2 line-clamp-1">{tool.tagline}</p>
+                <p className="text-[10px] text-gray-500 leading-relaxed line-clamp-2">{tool.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Featured Tools */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-white/5">
         <div className="flex items-end justify-between mb-8">

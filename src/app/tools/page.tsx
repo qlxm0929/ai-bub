@@ -1,7 +1,17 @@
 import { tools, categories } from '@/lib/tools';
+import { fetchNewTools } from '@/lib/newtools';
 import Link from 'next/link';
 
-export default function ToolsPage() {
+export const revalidate = 3600; // 1시간 캐시
+
+export default async function ToolsPage() {
+  let newTools: Awaited<ReturnType<typeof fetchNewTools>> = [];
+  try {
+    newTools = await fetchNewTools(12);
+  } catch (e) {
+    console.error('Failed to fetch new tools:', e);
+  }
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
       <div className="mb-10 text-center sm:text-left">
@@ -13,6 +23,29 @@ export default function ToolsPage() {
       </div>
 
       <div className="space-y-16">
+        {newTools.length > 0 && (
+          <section>
+            <div className="flex items-center gap-3 mb-6 border-b border-pink-500/20 pb-4">
+              <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">🔥 방금 출시된 최신 AI 도구</h2>
+              <span className="badge badge-pink">Product Hunt 연동</span>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {newTools.map((tool, i) => (
+                <a key={tool.id} href={tool.link} target="_blank" rel="noopener noreferrer"
+                  className="glass-card p-5 group cursor-pointer border border-pink-500/10 hover:border-pink-500/30" style={{ animationDelay: `${i * 0.05}s` }}>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="badge badge-pink text-[10px]">NEW</span>
+                    <span className="text-xs text-gray-500">{new Date(tool.pubDate).toLocaleDateString('ko-KR')}</span>
+                  </div>
+                  <h3 className="font-bold text-white mb-1 group-hover:text-pink-400 transition-colors line-clamp-1">{tool.name}</h3>
+                  <p className="text-xs font-medium text-pink-300/80 mb-2 line-clamp-1">{tool.tagline}</p>
+                  <p className="text-[10px] text-gray-400 leading-relaxed line-clamp-3">{tool.description}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
         {categories.map((category) => {
           const categoryTools = tools.filter((t) => t.category === category);
           
