@@ -6,7 +6,7 @@ export const revalidate = 60;
 
 export async function GET() {
   try {
-    const news = await fetchNews(60); // 전체 뉴스 페이지용
+    const news = await fetchNews(100); // 전체 뉴스 페이지용
     return NextResponse.json({ 
       news,
       updatedAt: new Date().toISOString()

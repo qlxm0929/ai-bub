@@ -111,7 +111,7 @@ function getTranslateLink(url: string, isKorean: boolean): string {
 
 import { translateToKorean } from './translate';
 
-export async function fetchNews(limit = 40): Promise<NewsItem[]> {
+export async function fetchNews(limit = 100): Promise<NewsItem[]> {
   const allItems: NewsItem[] = [];
 
   await Promise.allSettled(
