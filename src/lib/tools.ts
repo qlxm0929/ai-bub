@@ -12,7 +12,7 @@ export interface Tool {
   color: string;
 }
 
-export const categories = ['대화형 AI', '이미지 생성', '영상/오디오', '문서/글쓰기', '업무 생산성'];
+export const categories = ['대화형 AI', '이미지 생성', '영상/오디오', '문서/글쓰기', '업무 생산성', '코딩/개발', '하드웨어/설계', '논문/연구'];
 
 export const tools: Tool[] = [
   // 대화형 AI
@@ -96,19 +96,7 @@ export const tools: Tool[] = [
     tags: ['검색', '논문조사', '출처제공'],
     color: 'from-cyan-600 to-blue-800',
   },
-  {
-    id: 'cursor',
-    name: 'Cursor',
-    nameKo: '커서',
-    description: 'AI가 내장된 코드 에디터. 코드를 자동으로 짜주고, 버그를 찾아주며, 질문에 답해줍니다.',
-    url: 'https://cursor.sh',
-    category: '업무 생산성',
-    categoryIcon: '💻',
-    difficulty: 3,
-    hasFree: true,
-    tags: ['코딩', '개발자', 'VSCode호환'],
-    color: 'from-slate-700 to-slate-900',
-  },
+
   {
     id: 'zapier',
     name: 'Zapier Central',
@@ -257,5 +245,115 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['한국어', '카피라이팅', '무료'],
     color: 'from-pink-500 to-rose-600',
+  },
+
+  // 코딩/개발
+  {
+    id: 'cursor',
+    name: 'Cursor',
+    nameKo: '커서',
+    description: 'AI가 내장된 전 세계 1위 코드 에디터. 코드를 자동으로 짜주고, 버그를 찾아주며, 질문에 답해줍니다.',
+    url: 'https://cursor.sh',
+    category: '코딩/개발',
+    categoryIcon: '💻',
+    difficulty: 3,
+    hasFree: true,
+    tags: ['코딩', '개발자', 'VSCode호환'],
+    color: 'from-slate-700 to-slate-900',
+  },
+  {
+    id: 'v0-dev',
+    name: 'v0.dev',
+    nameKo: '브이제로',
+    description: '프롬프트(명령어)만 입력하면 그 자리에서 완성된 형태의 웹 UI와 코드를 만들어줍니다.',
+    url: 'https://v0.dev',
+    category: '코딩/개발',
+    categoryIcon: '✨',
+    difficulty: 2,
+    hasFree: true,
+    tags: ['프론트엔드', 'UI생성', '디자인'],
+    color: 'from-zinc-800 to-zinc-950',
+  },
+  {
+    id: 'github-copilot',
+    name: 'GitHub Copilot',
+    nameKo: '깃허브 코파일럿',
+    description: '가장 널리 쓰이는 AI 개발 도우미. 코드를 치는 순간 다음 줄이나 함수 전체를 귀신같이 완성해 줍니다.',
+    url: 'https://github.com/features/copilot',
+    category: '코딩/개발',
+    categoryIcon: '🐙',
+    difficulty: 2,
+    hasFree: false,
+    tags: ['자동완성', '표준도구', '개발자'],
+    color: 'from-gray-700 to-gray-900',
+  },
+
+  // 하드웨어/설계
+  {
+    id: 'flux-ai',
+    name: 'Flux.ai',
+    nameKo: '플럭스',
+    description: '하드웨어 엔지니어를 위한 AI 기반 PCB(회로) 설계 툴. 브라우저에서 회로 배선을 도와주고 조언을 해줍니다.',
+    url: 'https://www.flux.ai',
+    category: '하드웨어/설계',
+    categoryIcon: '⚙️',
+    difficulty: 3,
+    hasFree: true,
+    tags: ['PCB', '회로설계', '하드웨어'],
+    color: 'from-blue-700 to-indigo-900',
+  },
+  {
+    id: 'fusion360-gen',
+    name: 'Fusion 360 AI',
+    nameKo: '퓨전 360 (제너레이티브 디자인)',
+    description: '조건(하중, 소재 등)만 입력하면 AI가 가장 튼튼하고 가벼운 3D 모델(외형)을 수백 개 생성해 제안합니다.',
+    url: 'https://www.autodesk.com/products/fusion-360/generative-design',
+    category: '하드웨어/설계',
+    categoryIcon: '📐',
+    difficulty: 3,
+    hasFree: false,
+    tags: ['3D모델링', 'CAD', '기구설계'],
+    color: 'from-orange-600 to-red-800',
+  },
+
+  // 논문/연구
+  {
+    id: 'scispace',
+    name: 'SciSpace',
+    nameKo: '사이스페이스',
+    description: '전 세계 논문을 검색하고, PDF를 업로드하면 어려운 수식이나 표까지 AI가 한국어로 쉽게 설명해 줍니다.',
+    url: 'https://typeset.io',
+    category: '논문/연구',
+    categoryIcon: '🔬',
+    difficulty: 2,
+    hasFree: true,
+    tags: ['논문검색', '수식설명', '연구자'],
+    color: 'from-emerald-600 to-cyan-800',
+  },
+  {
+    id: 'consensus',
+    name: 'Consensus',
+    nameKo: '컨센서스',
+    description: '연구 논문에 기반한 검색 엔진. 질문을 던지면 관련 논문들의 결론을 모아 "예/아니오"로 명확히 답해줍니다.',
+    url: 'https://consensus.app',
+    category: '논문/연구',
+    categoryIcon: '🎓',
+    difficulty: 1,
+    hasFree: true,
+    tags: ['논문검색', '팩트체크', '근거제시'],
+    color: 'from-indigo-500 to-blue-700',
+  },
+  {
+    id: 'chatpdf',
+    name: 'ChatPDF',
+    nameKo: '챗PDF',
+    description: 'PDF 파일을 통째로 업로드한 뒤 파일 내용에 대해 질문하면, 몇 페이지에 있는 내용인지 출처와 함께 답합니다.',
+    url: 'https://www.chatpdf.com',
+    category: '논문/연구',
+    categoryIcon: '📄',
+    difficulty: 1,
+    hasFree: true,
+    tags: ['PDF요약', '문서대화', '대학생'],
+    color: 'from-red-500 to-rose-700',
   }
 ];
