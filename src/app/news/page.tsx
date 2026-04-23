@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import { NewsItem, timeAgo } from '@/lib/rss';
 import { youtubeChannels, popularSearches } from '@/lib/youtube';
 
-const SOURCES_KO = ['전체', '블로터', 'ZDNet 코리아', '전자신문', 'IT동아'];
+const SOURCES_KO = ['ZDNet 코리아', 'IT동아', '더에이아이'];
 const SOURCES_EN = ['테크크런치', '더 버지', '벤처비트'];
+const SOURCES_BLOG = ['카카오 테크', '토스 테크', '네이버 D2'];
 
-type Tab = 'all' | 'ko' | 'en' | 'youtube';
+type Tab = 'all' | 'ko' | 'en' | 'blog' | 'youtube';
 
 export default function NewsPage() {
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -46,14 +47,16 @@ export default function NewsPage() {
   }, []);
 
   const filtered = news.filter((item) => {
-    if (tab === 'ko') return item.isKorean;
-    if (tab === 'en') return !item.isKorean;
+    if (tab === 'ko') return item.isKorean && !item.isBlog;
+    if (tab === 'en') return !item.isKorean && !item.isBlog;
+    if (tab === 'blog') return item.isBlog;
     const srcOk = source === '전체' || item.sourceKo === source;
     return srcOk;
   });
 
-  const koCount = news.filter((i) => i.isKorean).length;
-  const enCount = news.filter((i) => !i.isKorean).length;
+  const koCount = news.filter((i) => i.isKorean && !i.isBlog).length;
+  const enCount = news.filter((i) => !i.isKorean && !i.isBlog).length;
+  const blogCount = news.filter((i) => i.isBlog).length;
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
@@ -76,6 +79,7 @@ export default function NewsPage() {
             { key: 'all', label: `전체 (${news.length})`, icon: '📰' },
             { key: 'ko', label: `🇰🇷 한국어 (${koCount})`, icon: '' },
             { key: 'en', label: `🌐 해외 뉴스 (${enCount})`, icon: '' },
+            { key: 'blog', label: `📝 기술 블로그 (${blogCount})`, icon: '' },
             { key: 'youtube', label: 'YouTube', icon: '▶️' },
           ].map(({ key, label }) => (
             <button
@@ -121,7 +125,7 @@ export default function NewsPage() {
           {tab === 'all' && (
             <div className="flex flex-wrap gap-2 mb-6">
               <span className="text-xs text-gray-500 self-center">출처:</span>
-              {['전체', ...SOURCES_KO, ...SOURCES_EN].map((s) => (
+              {['전체', ...SOURCES_KO, ...SOURCES_EN, ...SOURCES_BLOG].map((s) => (
                 <button
                   key={s}
                   onClick={() => setSource(s)}

@@ -11,6 +11,7 @@ export interface NewsItem {
   sourceKo: string;
   category: string;
   isKorean: boolean; // 한국어 뉴스 여부
+  isBlog?: boolean; // 기술 블로그 여부
   image?: string;
 }
 
@@ -58,6 +59,31 @@ const feeds = [
     sourceKo: '벤처비트',
     category: '산업 뉴스',
     isKorean: false,
+  },
+  // ===== 블로그/테크 (신규) =====
+  {
+    url: 'https://tech.kakao.com/feed/',
+    source: 'Kakao Tech',
+    sourceKo: '카카오 테크',
+    category: '기술 블로그',
+    isKorean: true,
+    isBlog: true,
+  },
+  {
+    url: 'https://toss.tech/rss.xml',
+    source: 'Toss Tech',
+    sourceKo: '토스 테크',
+    category: '기술 블로그',
+    isKorean: true,
+    isBlog: true,
+  },
+  {
+    url: 'https://d2.naver.com/d2.atom',
+    source: 'Naver D2',
+    sourceKo: '네이버 D2',
+    category: '기술 블로그',
+    isKorean: true,
+    isBlog: true,
   },
 ];
 
@@ -112,6 +138,7 @@ export async function fetchNews(limit = 40): Promise<NewsItem[]> {
             sourceKo: feed.sourceKo,
             category: feed.category,
             isKorean: feed.isKorean,
+            isBlog: feed.isBlog,
             image: extractImage(item as unknown as Record<string, unknown>),
           };
         }));
