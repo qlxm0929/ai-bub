@@ -127,24 +127,22 @@ export default function NewsPage() {
             </div>
           )}
 
-          {tab !== 'youtube' && (
-            <div className="flex flex-wrap gap-2 mb-6">
-              <span className="text-xs text-gray-500 self-center">출처:</span>
-              {['전체', ...(tab === 'all' ? [...SOURCES_KO, ...SOURCES_EN, ...SOURCES_BLOG] : tab === 'ko' ? SOURCES_KO : tab === 'en' ? SOURCES_EN : SOURCES_BLOG)].map((s) => (
-                <button
-                  key={s}
-                  onClick={() => setSource(s)}
-                  className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-all ${
-                    source === s
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
-                  }`}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="flex flex-wrap gap-2 mb-6">
+            <span className="text-xs text-gray-500 self-center">출처:</span>
+            {['전체', ...(tab === 'all' ? [...SOURCES_KO, ...SOURCES_EN, ...SOURCES_BLOG] : tab === 'ko' ? SOURCES_KO : tab === 'en' ? SOURCES_EN : SOURCES_BLOG)].map((s) => (
+              <button
+                key={s}
+                onClick={() => setSource(s)}
+                className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-all ${
+                  source === s
+                    ? 'bg-purple-600 text-white'
+                    : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
 
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
