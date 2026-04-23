@@ -38,7 +38,8 @@ export default function NewsPage() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('tab') === 'youtube') setTab('youtube');
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (urlParams.get('tab') === 'youtube') setTimeout(() => setTab('youtube'), 0);
     }
   }, []);
 

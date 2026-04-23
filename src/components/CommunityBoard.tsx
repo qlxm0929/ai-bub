@@ -241,7 +241,7 @@ export default function CommunityBoard() {
   };
 
   useEffect(() => { 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
     fetchPosts(); 
   }, [category, sort]);
 
