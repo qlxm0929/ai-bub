@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -7,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center gap-3 mb-4 group">
-              <img src="/aiel-logo.png" alt="AI.EL Logo" className="w-8 h-8 rounded-md group-hover:scale-105 transition-transform opacity-80 group-hover:opacity-100" />
+              <Image src="/aiel-logo.png" alt="AI.EL Logo" width={32} height={32} className="rounded-md group-hover:scale-105 transition-transform opacity-80 group-hover:opacity-100" />
               <span className="font-bold text-lg text-white tracking-widest">AI.EL</span>
             </Link>
             <p className="text-sm text-gray-500 leading-relaxed max-w-sm">

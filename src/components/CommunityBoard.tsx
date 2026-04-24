@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import type { CommunityPost } from '@/lib/supabase';
 import { recommendedPrompts, promptCategories } from '@/lib/prompts';
 import { communityResources } from '@/lib/community';
@@ -232,18 +232,18 @@ export default function CommunityBoard() {
   const [error, setError] = useState('');
   const formRef = useRef<HTMLDivElement>(null);
 
-  const fetchPosts = async (cat = category, sortOrder = sort) => {
+  const fetchPosts = useCallback(async (cat = category, sortOrder = sort) => {
     setTimeout(() => setLoading(true), 0);
     const res = await fetch(`/api/posts?category=${encodeURIComponent(cat)}&sort=${sortOrder}`);
     const data = await res.json();
     setPosts(data.posts || []);
     setLoading(false);
-  };
+  }, [category, sort]);
 
   useEffect(() => { 
-    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
-    fetchPosts(); 
-  }, [category, sort]);
+    const t = setTimeout(() => fetchPosts(), 0); 
+    return () => clearTimeout(t);
+  }, [fetchPosts]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

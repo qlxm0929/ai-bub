@@ -2,7 +2,6 @@
 
 import { tools, categories } from '@/lib/tools';
 import { NewTool } from '@/lib/newtools';
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function ToolsPage() {

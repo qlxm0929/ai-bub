@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 export default function Header() {
@@ -18,7 +19,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-black/50 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
-          <img src="/aiel-logo.png" alt="AI.EL Logo" className="w-8 h-8 rounded-md group-hover:scale-105 transition-transform" />
+          <Image src="/aiel-logo.png" alt="AI.EL Logo" width={32} height={32} className="rounded-md group-hover:scale-105 transition-transform" />
           <span className="font-bold text-lg text-white tracking-widest">AI.EL</span>
         </Link>
 
