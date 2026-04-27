@@ -36,28 +36,22 @@ export default function App() {
   );
 }`;
 
-const INDEX_TSX = `import React from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App";
+const INDEX_TSX = `import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
 
-// Inject Tailwind CDN
-if (!document.getElementById("tailwind-cdn")) {
-  const script = document.createElement("script");
-  script.id = "tailwind-cdn";
-  script.src = "https://cdn.tailwindcss.com";
-  document.head.appendChild(script);
-}
+const script = document.createElement('script');
+script.src = 'https://cdn.tailwindcss.com';
+document.head.appendChild(script);
 
-const rootElement = document.getElementById("root");
-if (rootElement) {
-  const root = createRoot(rootElement);
-  root.render(<App />);
-}
+const rootElement = document.getElementById('root');
+ReactDOM.createRoot(rootElement).render(React.createElement(App));
 `;
 
 export default function AppGeneratorPage() {
   const [prompt, setPrompt] = useState('');
   const [code, setCode] = useState(DEFAULT_CODE);
+  const [sandpackKey, setSandpackKey] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [viewMode, setViewMode] = useState<'preview' | 'code'>('preview');
@@ -86,6 +80,7 @@ export default function AppGeneratorPage() {
       }
       
       setCode(data.code);
+      setSandpackKey(k => k + 1);  // force remount so preview refreshes
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -192,6 +187,7 @@ export default function AppGeneratorPage() {
         {/* Sandpack Provider & Layout */}
         <div className="flex-1 relative overflow-hidden bg-white">
           <SandpackProvider
+            key={sandpackKey}
             template="react-ts"
             theme="light"
             files={{
