@@ -31,6 +31,13 @@ export default function App() {
 \`\`\`
 `;
 
+// Fallback model list — tried in order if previous model is unavailable
+const MODELS = [
+  'gemini-2.5-flash',
+  'gemini-2.0-flash',
+  'gemini-2.0-flash-lite',
+];
+
 export async function POST(req: NextRequest) {
   try {
     const { prompt } = await req.json();
@@ -43,26 +50,50 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'GEMINI_API_KEY is not configured in .env.local' }, { status: 500 });
     }
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: prompt,
-      config: {
-        systemInstruction: SYSTEM_PROMPT,
-        temperature: 0.2,
-      }
-    });
+    let lastError: any = null;
 
-    let code = response.text || '';
-    
-    // Extract code from markdown block if present
-    const match = code.match(/```tsx([\s\S]*?)```/) || code.match(/```jsx([\s\S]*?)```/) || code.match(/```([\s\S]*?)```/);
-    if (match && match[1]) {
-      code = match[1].trim();
-    } else {
-      code = code.trim();
+    for (const model of MODELS) {
+      try {
+        console.log(`[generate-ui] Trying model: ${model}`);
+        const response = await ai.models.generateContent({
+          model,
+          contents: prompt,
+          config: {
+            systemInstruction: SYSTEM_PROMPT,
+            temperature: 0.2,
+          }
+        });
+
+        let code = response.text || '';
+
+        // Extract code from markdown block if present
+        const match = code.match(/```tsx([\s\S]*?)```/) || code.match(/```jsx([\s\S]*?)```/) || code.match(/```([\s\S]*?)```/);
+        if (match && match[1]) {
+          code = match[1].trim();
+        } else {
+          code = code.trim();
+        }
+
+        console.log(`[generate-ui] Success with model: ${model}`);
+        return NextResponse.json({ code, model });
+
+      } catch (err: any) {
+        const status = err?.status ?? err?.code ?? 0;
+        const isRetryable = status === 503 || status === 429 || String(err?.message).includes('UNAVAILABLE') || String(err?.message).includes('quota');
+        console.warn(`[generate-ui] Model ${model} failed (${status}): ${err?.message}`);
+        lastError = err;
+
+        if (!isRetryable) {
+          // Non-retryable error — don't try other models
+          break;
+        }
+        // Retryable: try next model in list
+      }
     }
 
-    return NextResponse.json({ code });
+    const msg = lastError?.message || 'All models are currently unavailable. Please try again later.';
+    return NextResponse.json({ error: msg }, { status: 503 });
+
   } catch (error: any) {
     console.error('Error generating UI:', error);
     return NextResponse.json({ error: error.message || 'Failed to generate UI' }, { status: 500 });
