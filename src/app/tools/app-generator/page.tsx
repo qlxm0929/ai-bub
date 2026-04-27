@@ -76,13 +76,30 @@ export default function AppGeneratorPage() {
       const data = await res.json();
       
       if (!res.ok) {
-        throw new Error(data.error || 'Failed to generate UI');
+        const rawMsg: string = typeof data.error === 'object'
+          ? JSON.stringify(data.error)
+          : (data.error || 'Failed to generate UI');
+        // Detect quota/rate-limit errors and show a friendly message
+        if (rawMsg.includes('quota') || rawMsg.includes('RESOURCE_EXHAUSTED') || rawMsg.includes('429')) {
+          throw new Error('QUOTA_EXCEEDED');
+        }
+        if (rawMsg.includes('UNAVAILABLE') || rawMsg.includes('503')) {
+          throw new Error('SERVICE_UNAVAILABLE');
+        }
+        throw new Error(rawMsg);
       }
       
       setCode(data.code);
       setSandpackKey(k => k + 1);  // force remount so preview refreshes
     } catch (err: any) {
-      setError(err.message);
+      const msg: string = err.message || '';
+      if (msg === 'QUOTA_EXCEEDED') {
+        setError('__QUOTA__');
+      } else if (msg === 'SERVICE_UNAVAILABLE') {
+        setError('__UNAVAILABLE__');
+      } else {
+        setError(msg);
+      }
     } finally {
       setLoading(false);
     }
@@ -123,7 +140,31 @@ export default function AppGeneratorPage() {
             </div>
           </div>
           
-          {error && (
+          {error === '__QUOTA__' && (
+            <div className="p-4 bg-amber-50 rounded-xl text-sm border border-amber-200 shadow-sm space-y-2">
+              <div className="flex items-center gap-2 font-bold text-amber-800">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                API 무료 할당량 소진
+              </div>
+              <p className="text-amber-700 leading-relaxed">
+                오늘의 Gemini 무료 요청 횟수를 모두 사용했습니다.
+              </p>
+              <p className="text-amber-600 text-xs leading-relaxed">
+                ① 내일(자정 후) 다시 시도하거나<br/>
+                ② <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="underline font-semibold">Google AI Studio</a>에서 결제를 활성화하면 즉시 사용 가능합니다.
+              </p>
+            </div>
+          )}
+          {error === '__UNAVAILABLE__' && (
+            <div className="p-4 bg-orange-50 rounded-xl text-sm border border-orange-200 shadow-sm space-y-1">
+              <div className="flex items-center gap-2 font-bold text-orange-800">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                AI 서버 일시 혼잡
+              </div>
+              <p className="text-orange-700 leading-relaxed">잠시 후 다시 시도해 주세요. (보통 1분 이내에 해소됩니다)</p>
+            </div>
+          )}
+          {error && error !== '__QUOTA__' && error !== '__UNAVAILABLE__' && (
             <div className="p-3.5 bg-red-50 text-red-600 rounded-xl text-sm border border-red-100 flex items-start gap-2.5 shadow-sm">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <span className="leading-tight">{error}</span>
