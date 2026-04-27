@@ -11,6 +11,7 @@ export default function Header() {
     { href: '/', label: '홈' },
     { href: '/news', label: 'AI 뉴스' },
     { href: '/tools', label: '필수 도구' },
+    { href: '/tools/app-generator', label: '✨ 앱 메이커' },
     { href: '/guides', label: '가이드' },
     { href: '/community', label: '🙌 게시판' },
   ];
@@ -43,6 +44,7 @@ export default function Header() {
         </nav>
 
         <div className="flex md:hidden items-center gap-4">
+          <Link href="/tools/app-generator" className="text-sm font-bold text-indigo-400">앱 메이커</Link>
           <Link href="/news" className="text-sm font-medium text-gray-300">뉴스</Link>
           <Link href="/guides" className="text-sm font-medium text-gray-300">가이드</Link>
         </div>

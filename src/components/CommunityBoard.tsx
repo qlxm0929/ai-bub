@@ -297,6 +297,22 @@ export default function CommunityBoard() {
         </div>
       </div>
 
+      {/* AI App Generator Banner */}
+      <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-indigo-900/40 to-purple-900/40 border border-indigo-500/30 flex flex-col md:flex-row items-center justify-between gap-6 hover:border-indigo-500/60 transition-colors">
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="badge bg-indigo-500 text-white text-[10px]">NEW</span>
+            <h2 className="text-xl font-bold text-white">✨ AI 앱 메이커 출시!</h2>
+          </div>
+          <p className="text-sm text-indigo-200">
+            복잡한 코딩 없이 프롬프트 한 줄만으로 나만의 React + Tailwind UI를 만들고 실시간으로 확인해보세요.
+          </p>
+        </div>
+        <Link href="/tools/app-generator" className="whitespace-nowrap px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-indigo-900/20 transition-all flex items-center gap-2 flex-shrink-0">
+          🚀 지금 바로 만들어보기
+        </Link>
+      </div>
+
       {/* 메인 레이아웃: 게시판 + 사이드바 */}
       <div className="flex flex-col lg:flex-row gap-8">
 
