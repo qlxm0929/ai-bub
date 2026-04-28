@@ -74,9 +74,15 @@ export default function ToolsClient({ initialNewTools, fetchFailed }: Props) {
       {/* 헤더 */}
       <div className="mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="text-center sm:text-left">
-          <div className="badge badge-green mb-3">AI 도구 모음</div>
+          <div className="flex flex-wrap gap-2 mb-3">
+            <div className="badge badge-green">AI 도구 모음</div>
+            <div className="badge badge-gray text-[10px]">비공식 큐레이션</div>
+          </div>
           <h1 className="text-4xl font-black text-white mb-4">어떤 도구가 필요하신가요?</h1>
           <p className="text-gray-400 text-lg">초보자도 쓰기 좋은 검증된 AI 도구들을 모아두었어요.</p>
+          <p className="text-xs text-gray-600 mt-2">
+            각 서비스의 요금·기능은 수시로 바뀔 수 있습니다. 사용 전 공식 사이트를 확인하세요.
+          </p>
         </div>
 
         <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
