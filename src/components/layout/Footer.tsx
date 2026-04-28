@@ -29,7 +29,7 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-white mb-4">추천 링크</h3>
             <ul className="space-y-3">
-              <li><a href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">ChatGPT</a></li>
+              <li><a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">ChatGPT</a></li>
               <li><a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">Claude</a></li>
               <li><a href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">GitHub Copilot</a></li>
             </ul>

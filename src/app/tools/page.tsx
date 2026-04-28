@@ -134,35 +134,42 @@ export default function ToolsPage() {
 
       <div className="space-y-16">
         {/* 방금 출시된 최신 AI 도구 (Product Hunt) */}
-        {!loading && filteredNewTools.length > 0 && !activeFilter && (
+        {!activeFilter && (
           <section>
             <div className="flex items-center gap-3 mb-6 border-b border-pink-500/20 pb-4">
               <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">🔥 방금 출시된 최신 AI 도구</h2>
               <span className="badge badge-pink">Product Hunt 연동</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {filteredNewTools.map((tool, i) => (
-                <a key={tool.id} href={tool.link} target="_blank" rel="noopener noreferrer"
-                  className="glass-card p-5 group cursor-pointer border border-pink-500/10 hover:border-pink-500/30" style={{ animationDelay: `${i * 0.05}s` }}>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="badge badge-pink text-[10px]">NEW</span>
-                    <span className="text-xs text-gray-500">{new Date(tool.pubDate).toLocaleDateString('ko-KR')}</span>
+            {/* Product Hunt만 스켈레톤으로 로딩 표시 */}
+            {loading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="glass-card p-5 border border-pink-500/10 animate-pulse">
+                    <div className="h-3 w-1/3 bg-white/10 rounded mb-3" />
+                    <div className="h-4 w-3/4 bg-white/10 rounded mb-2" />
+                    <div className="h-3 w-full bg-white/10 rounded mb-1" />
+                    <div className="h-3 w-2/3 bg-white/10 rounded" />
                   </div>
-                  <h3 className="font-bold text-white mb-1 group-hover:text-pink-400 transition-colors line-clamp-1">{tool.name}</h3>
-                  <p className="text-xs font-medium text-pink-300/80 mb-2 line-clamp-1">{tool.tagline}</p>
-                  <p className="text-[10px] text-gray-400 leading-relaxed line-clamp-3">{tool.description}</p>
-                </a>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : filteredNewTools.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {filteredNewTools.map((tool, i) => (
+                  <a key={tool.id} href={tool.link} target="_blank" rel="noopener noreferrer"
+                    className="glass-card p-5 group cursor-pointer border border-pink-500/10 hover:border-pink-500/30" style={{ animationDelay: `${i * 0.05}s` }}>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="badge badge-pink text-[10px]">NEW</span>
+                      <span className="text-xs text-gray-500">{new Date(tool.pubDate).toLocaleDateString('ko-KR')}</span>
+                    </div>
+                    <h3 className="font-bold text-white mb-1 group-hover:text-pink-400 transition-colors line-clamp-1">{tool.name}</h3>
+                    <p className="text-xs font-medium text-pink-300/80 mb-2 line-clamp-1">{tool.tagline}</p>
+                    <p className="text-[10px] text-gray-400 leading-relaxed line-clamp-3">{tool.description}</p>
+                  </a>
+                ))}
+              </div>
+            ) : null}
           </section>
-        )}
-
-        {/* 로딩 상태 표시 */}
-        {loading && (
-          <div className="flex justify-center py-12">
-            <div className="animate-spin text-4xl">🔄</div>
-          </div>
         )}
 
         {/* 검색/필터 결과가 없을 때 */}
