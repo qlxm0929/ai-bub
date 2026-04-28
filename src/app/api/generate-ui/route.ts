@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
 const SYSTEM_PROMPT = `
 You are an expert React and Tailwind CSS developer.
 The user will describe a UI component they want to build.
@@ -40,15 +38,23 @@ const MODELS = [
 
 export async function POST(req: NextRequest) {
   try {
-    const { prompt } = await req.json();
+    const { prompt, apiKey: userApiKey } = await req.json();
 
     if (!prompt) {
       return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
     }
 
-    if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json({ error: 'GEMINI_API_KEY is not configured in .env.local' }, { status: 500 });
+    // 사용자 키 우선, 없으면 서버 키 사용
+    const resolvedKey = userApiKey?.trim() || process.env.GEMINI_API_KEY;
+
+    if (!resolvedKey) {
+      return NextResponse.json(
+        { error: 'API 키가 없습니다. 사이드바에서 Gemini API 키를 설정해주세요.' },
+        { status: 400 }
+      );
     }
+
+    const ai = new GoogleGenAI({ apiKey: resolvedKey });
 
     let lastError: any = null;
 
