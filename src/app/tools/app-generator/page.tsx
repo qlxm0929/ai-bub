@@ -8,6 +8,7 @@ import {
   SandpackPreview,
 } from '@codesandbox/sandpack-react';
 import { Code, Eye, Sparkles, Send, Loader2, AlertCircle, Key, X, CheckCircle } from 'lucide-react';
+import LoadingEKG from '@/components/ui/LoadingEKG';
 
 const DEFAULT_CODE = `import React from 'react';
 import { Sparkles } from 'lucide-react';
@@ -282,7 +283,7 @@ export default function AppGeneratorPage() {
             className="w-full py-3.5 bg-slate-900 text-white rounded-xl font-semibold text-sm hover:bg-slate-800 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none transition-all flex justify-center items-center gap-2 shadow-md shadow-slate-900/10"
           >
             {loading ? (
-              <><Loader2 className="w-4 h-4 animate-spin" />생성 중...</>
+              <><Loader2 className="w-4 h-4 animate-spin" />AI 생성 중...</>
             ) : (
               <><Send className="w-4 h-4" />UI 생성하기</>
             )}
@@ -317,6 +318,18 @@ export default function AppGeneratorPage() {
         </div>
 
         <div className="flex-1 relative overflow-hidden bg-white">
+          {/* 생성 중 EKG 오버레이 */}
+          {loading && (
+            <div className="absolute inset-0 z-20 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center gap-6">
+              <LoadingEKG width={340} height={90} color="cyan" showLabel={false} />
+              <div className="text-center space-y-1">
+                <p className="text-cyan-400 font-mono text-sm tracking-widest animate-pulse">
+                  AI가 코드를 생성하는 중...
+                </p>
+                <p className="text-slate-500 text-xs">잠시만 기다려주세요</p>
+              </div>
+            </div>
+          )}
           <SandpackProvider
             key={sandpackKey}
             template="react-ts"
