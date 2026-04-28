@@ -13,6 +13,7 @@ export default function ToolsClient({ initialNewTools, fetchFailed }: Props) {
   const [newTools, setNewTools] = useState<NewTool[]>(initialNewTools);
   const [hasFetchError, setHasFetchError] = useState(fetchFailed);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(initialNewTools.length > 0 ? new Date() : null);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
@@ -23,6 +24,7 @@ export default function ToolsClient({ initialNewTools, fetchFailed }: Props) {
       .then((r) => r.json())
       .then((data) => {
         setNewTools(data.tools || []);
+        setLastUpdated(new Date());
         setIsRefreshing(false);
       })
       .catch(() => {
@@ -30,6 +32,10 @@ export default function ToolsClient({ initialNewTools, fetchFailed }: Props) {
         setIsRefreshing(false);
       });
   };
+
+  const updatedLabel = lastUpdated
+    ? `${lastUpdated.getHours().toString().padStart(2, '0')}:${lastUpdated.getMinutes().toString().padStart(2, '0')} 기준`
+    : null;
 
   const query = searchQuery.toLowerCase().trim();
 
@@ -84,14 +90,19 @@ export default function ToolsClient({ initialNewTools, fetchFailed }: Props) {
             />
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">🔍</span>
           </div>
-          <button
-            onClick={refreshNewTools}
-            disabled={isRefreshing}
-            className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors w-full sm:w-auto ${isRefreshing ? 'opacity-50 cursor-not-allowed' : ''}`}
-          >
-            <span className={`text-base ${isRefreshing ? 'animate-spin' : ''}`}>🔄</span>
-            <span className="hidden sm:inline">{isRefreshing ? '업데이트 중...' : '새로고침'}</span>
-          </button>
+          <div className="flex flex-col items-end gap-1 w-full sm:w-auto">
+            <button
+              onClick={refreshNewTools}
+              disabled={isRefreshing}
+              className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors w-full sm:w-auto ${isRefreshing ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              <span className={`text-base ${isRefreshing ? 'animate-spin' : ''}`}>🔄</span>
+              <span className="hidden sm:inline">{isRefreshing ? '업데이트 중...' : '새로고침'}</span>
+            </button>
+            {!isRefreshing && updatedLabel && (
+              <span className="text-[10px] text-gray-600 hidden sm:block">{updatedLabel}</span>
+            )}
+          </div>
         </div>
       </div>
 
@@ -164,11 +175,10 @@ export default function ToolsClient({ initialNewTools, fetchFailed }: Props) {
                     className="glass-card p-5 group cursor-pointer border border-pink-500/10 hover:border-pink-500/30"
                     style={{ animationDelay: `${i * 0.05}s` }}>
                     <div className="flex items-center justify-between mb-3">
-                      <span className="badge badge-pink text-[10px]">NEW</span>
+                      <span className="badge badge-pink text-[10px]">{tool.category}</span>
                       <span className="text-xs text-gray-500">{new Date(tool.pubDate).toLocaleDateString('ko-KR')}</span>
                     </div>
                     <h3 className="font-bold text-white mb-1 group-hover:text-pink-400 transition-colors line-clamp-1">{tool.name}</h3>
-                    <p className="text-xs font-medium text-pink-300/80 mb-2 line-clamp-1">{tool.tagline}</p>
                     <p className="text-[10px] text-gray-400 leading-relaxed line-clamp-3">{tool.description}</p>
                   </a>
                 ))}
