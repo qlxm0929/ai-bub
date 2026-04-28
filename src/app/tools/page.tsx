@@ -7,12 +7,14 @@ import { useState, useEffect } from 'react';
 export default function ToolsPage() {
   const [newTools, setNewTools] = useState<NewTool[]>([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   const fetchToolsData = () => {
     setTimeout(() => setIsRefreshing(true), 0);
+    setFetchError(false);
     fetch('/api/newtools')
       .then((r) => r.json())
       .then((data) => {
@@ -22,6 +24,7 @@ export default function ToolsPage() {
       })
       .catch((e) => {
         console.error(e);
+        setFetchError(true);
         setLoading(false);
         setIsRefreshing(false);
       });
@@ -88,14 +91,17 @@ export default function ToolsPage() {
             />
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">🔍</span>
           </div>
-          <button
-            onClick={fetchToolsData}
-            disabled={isRefreshing || loading}
-            className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors w-full sm:w-auto ${isRefreshing ? 'opacity-50 cursor-not-allowed' : ''}`}
-          >
-            <span className={`text-base ${isRefreshing ? 'animate-spin' : ''}`}>🔄</span>
-            <span className="hidden sm:inline">{isRefreshing ? '업데이트 중...' : '새로고침'}</span>
-          </button>
+          {/* 새로고침 버튼: 초기 로딩 완료 후에만 표시 */}
+          {!loading && (
+            <button
+              onClick={fetchToolsData}
+              disabled={isRefreshing}
+              className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors w-full sm:w-auto ${isRefreshing ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              <span className={`text-base ${isRefreshing ? 'animate-spin' : ''}`}>🔄</span>
+              <span className="hidden sm:inline">{isRefreshing ? '업데이트 중...' : '새로고침'}</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -141,7 +147,7 @@ export default function ToolsPage() {
               <span className="badge badge-pink">Product Hunt 연동</span>
             </div>
 
-            {/* Product Hunt만 스켈레톤으로 로딩 표시 */}
+            {/* Product Hunt: 로딩 / 결과 / 실패 분기 */}
             {loading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {[...Array(4)].map((_, i) => (
@@ -152,6 +158,17 @@ export default function ToolsPage() {
                     <div className="h-3 w-2/3 bg-white/10 rounded" />
                   </div>
                 ))}
+              </div>
+            ) : fetchError ? (
+              <div className="text-center py-10 text-gray-600 border border-white/5 rounded-2xl">
+                <div className="text-3xl mb-2">📡</div>
+                <p className="text-sm">최신 도구를 불러오지 못했어요.</p>
+                <button
+                  onClick={fetchToolsData}
+                  className="mt-3 px-4 py-1.5 text-xs bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
+                >
+                  다시 시도
+                </button>
               </div>
             ) : filteredNewTools.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

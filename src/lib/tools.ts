@@ -14,6 +14,9 @@ export interface Tool {
   quickFilters?: string[]; // 빠른 필터 레이블
 }
 
+// 모든 카드가 동일한 날짜를 표시하도록 이 파일이 빌드될 때의 연월을 자동 계산
+const REVIEWED_AT = new Date().toISOString().slice(0, 7); // e.g. "2026-04"
+
 export const categories = ['대화형 AI', '이미지 생성', '영상/오디오', '문서/글쓰기', '업무 생산성', '코딩/개발', '하드웨어/설계', '논문/연구'];
 
 // 빠른 필터 정의
@@ -40,7 +43,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['만능', '대화형', '필수도구'],
     color: 'from-emerald-600 to-teal-800',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'beginner'],
   },
   {
@@ -55,7 +58,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['문서분석', '글쓰기', '코딩'],
     color: 'from-amber-600 to-orange-800',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'beginner', 'korean'],
   },
   {
@@ -70,7 +73,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['구글연동', '최신정보', '무료'],
     color: 'from-blue-600 to-indigo-800',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'beginner'],
   },
   {
@@ -85,7 +88,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['이미지생성', '빙검색', '무료'],
     color: 'from-sky-500 to-blue-700',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'beginner'],
   },
   {
@@ -100,7 +103,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['AI모음', '모델비교', '챗봇생성'],
     color: 'from-indigo-500 to-purple-700',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free'],
   },
 
@@ -117,7 +120,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['검색', '논문조사', '출처제공'],
     color: 'from-cyan-600 to-blue-800',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'beginner'],
   },
   {
@@ -132,7 +135,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['업무자동화', '연동', '워크플로우'],
     color: 'from-orange-500 to-red-600',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free'],
   },
 
@@ -149,7 +152,7 @@ export const tools: Tool[] = [
     hasFree: false,
     tags: ['고퀄리티', '예술', '디자인'],
     color: 'from-purple-600 to-fuchsia-800',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['image'],
   },
   {
@@ -164,7 +167,7 @@ export const tools: Tool[] = [
     hasFree: false,
     tags: ['쉽다', 'ChatGPT연동', '스토리보드'],
     color: 'from-rose-600 to-pink-800',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['image', 'beginner'],
   },
   {
@@ -179,7 +182,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['무료크레딧', '게임아트', '다양한모델'],
     color: 'from-fuchsia-600 to-purple-900',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'image'],
   },
 
@@ -196,7 +199,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['작곡', '음악생성', '보컬'],
     color: 'from-yellow-500 to-orange-600',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'beginner', 'video'],
   },
   {
@@ -211,7 +214,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['고음질', '작곡', '음악생성'],
     color: 'from-blue-500 to-indigo-600',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'video'],
   },
   {
@@ -226,7 +229,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['영상생성', '특수효과', '영화'],
     color: 'from-teal-500 to-emerald-700',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'video'],
   },
   {
@@ -241,7 +244,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['아바타', '영상제작', '립싱크'],
     color: 'from-violet-500 to-purple-600',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'video'],
   },
 
@@ -258,7 +261,7 @@ export const tools: Tool[] = [
     hasFree: false,
     tags: ['노션', '문서요약', '아이디어'],
     color: 'from-stone-600 to-stone-800',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: [],
   },
   {
@@ -273,7 +276,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['PPT', '발표자료', '디자인'],
     color: 'from-violet-600 to-purple-800',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'beginner'],
   },
   {
@@ -288,7 +291,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['한국어', '카피라이팅', '무료'],
     color: 'from-pink-500 to-rose-600',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'beginner', 'korean'],
   },
 
@@ -305,7 +308,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['코딩', '개발자', 'VSCode호환'],
     color: 'from-slate-700 to-slate-900',
-    lastReviewed: '2026-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'code'],
   },
   {
