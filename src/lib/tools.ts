@@ -323,7 +323,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['프론트엔드', 'UI생성', '디자인'],
     color: 'from-zinc-800 to-zinc-950',
-    lastReviewed: '2025-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'code'],
   },
   {
@@ -338,7 +338,7 @@ export const tools: Tool[] = [
     hasFree: false,
     tags: ['자동완성', '표준도구', '개발자'],
     color: 'from-gray-700 to-gray-900',
-    lastReviewed: '2025-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['code'],
   },
 
@@ -355,7 +355,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['PCB', '회로설계', '하드웨어'],
     color: 'from-blue-700 to-indigo-900',
-    lastReviewed: '2025-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free'],
   },
   {
@@ -370,7 +370,7 @@ export const tools: Tool[] = [
     hasFree: false,
     tags: ['3D모델링', 'CAD', '기구설계'],
     color: 'from-orange-600 to-red-800',
-    lastReviewed: '2025-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: [],
   },
 
@@ -387,7 +387,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['논문검색', '수식설명', '연구자'],
     color: 'from-emerald-600 to-cyan-800',
-    lastReviewed: '2025-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free'],
   },
   {
@@ -402,7 +402,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['논문검색', '팩트체크', '근거제시'],
     color: 'from-indigo-500 to-blue-700',
-    lastReviewed: '2025-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'beginner'],
   },
   {
@@ -417,7 +417,7 @@ export const tools: Tool[] = [
     hasFree: true,
     tags: ['PDF요약', '문서대화', '대학생'],
     color: 'from-red-500 to-rose-700',
-    lastReviewed: '2025-04',
+    lastReviewed: REVIEWED_AT,
     quickFilters: ['free', 'beginner'],
   },
 ];

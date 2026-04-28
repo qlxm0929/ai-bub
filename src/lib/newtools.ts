@@ -11,9 +11,8 @@ export interface NewTool {
   thumbnail?: string;
 }
 
-// Product Hunt AI 카테고리에서 파싱
+// Product Hunt AI 카테고리 RSS 파싱
 import Parser from 'rss-parser';
-import { translateToKorean } from './translate';
 
 const parser = new Parser();
 
@@ -31,16 +30,9 @@ export async function fetchNewTools(limit = 12): Promise<NewTool[]> {
     feeds.map(async (feed) => {
       try {
         const parsed = await parser.parseURL(feed.url);
-        const items = await Promise.all(
-          parsed.items.slice(0, limit).map(async (item, idx) => {
+        const items = parsed.items.slice(0, limit).map((item, idx) => {
             const rawTitle = item.title || '';
             const rawSummary = item.contentSnippet?.slice(0, 200) || '';
-
-            // 번역
-            const [titleKo, summaryKo] = await Promise.all([
-              translateToKorean(rawTitle),
-              translateToKorean(rawSummary),
-            ]);
 
             const pubDate = item.pubDate || item.isoDate || new Date().toISOString();
             const daysDiff = (Date.now() - new Date(pubDate).getTime()) / 86400000;
@@ -48,16 +40,15 @@ export async function fetchNewTools(limit = 12): Promise<NewTool[]> {
             return {
               id: `ph-${idx}-${Date.now()}`,
               name: rawTitle,
-              tagline: titleKo !== rawTitle ? titleKo : rawTitle,
-              description: summaryKo || rawSummary,
+              tagline: rawTitle,  // 번역 없이 원문 사용 (번역 요청 수 감소)
+              description: rawSummary,
               link: item.link || 'https://www.producthunt.com/topics/artificial-intelligence',
               pubDate,
               category: feed.category,
               isNew: daysDiff < 7,
               thumbnail: undefined,
             };
-          })
-        );
+          });
         tools.push(...items);
       } catch (e) {
         console.error('Failed to fetch new tools:', e);
