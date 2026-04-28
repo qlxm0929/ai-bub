@@ -34,7 +34,7 @@ export default function ToolsClient({ initialNewTools, fetchFailed }: Props) {
   };
 
   const updatedLabel = lastUpdated
-    ? `${lastUpdated.getHours().toString().padStart(2, '0')}:${lastUpdated.getMinutes().toString().padStart(2, '0')} 기준`
+    ? `업데이트 ${lastUpdated.getHours().toString().padStart(2, '0')}:${lastUpdated.getMinutes().toString().padStart(2, '0')}`
     : null;
 
   const query = searchQuery.toLowerCase().trim();
@@ -175,7 +175,7 @@ export default function ToolsClient({ initialNewTools, fetchFailed }: Props) {
                     className="glass-card p-5 group cursor-pointer border border-pink-500/10 hover:border-pink-500/30"
                     style={{ animationDelay: `${i * 0.05}s` }}>
                     <div className="flex items-center justify-between mb-3">
-                      <span className="badge badge-pink text-[10px]">{tool.category}</span>
+                      <span className="badge badge-pink text-[10px]">{tool.tagline}</span>
                       <span className="text-xs text-gray-500">{new Date(tool.pubDate).toLocaleDateString('ko-KR')}</span>
                     </div>
                     <h3 className="font-bold text-white mb-1 group-hover:text-pink-400 transition-colors line-clamp-1">{tool.name}</h3>
