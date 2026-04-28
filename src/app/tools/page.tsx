@@ -32,6 +32,11 @@ export default function ToolsPage() {
 
   useEffect(() => {
     fetchToolsData();
+    // 스켈레톤이 무한히 남지 않도록 최대 8초 후 강제 완료
+    const safetyTimer = setTimeout(() => {
+      setLoading(false);
+    }, 8000);
+    return () => clearTimeout(safetyTimer);
   }, []);
 
   const query = searchQuery.toLowerCase().trim();
@@ -185,7 +190,19 @@ export default function ToolsPage() {
                   </a>
                 ))}
               </div>
-            ) : null}
+            ) : (
+              /* 데이터는 있지만 빈 배열 또는 필터 결과 없음 */
+              <div className="text-center py-10 text-gray-600 border border-white/5 rounded-2xl">
+                <div className="text-3xl mb-2">📦</div>
+                <p className="text-sm">현재 표시할 최신 AI 도구가 없습니다.</p>
+                <button
+                  onClick={fetchToolsData}
+                  className="mt-3 px-4 py-1.5 text-xs bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
+                >
+                  다시 불러오기
+                </button>
+              </div>
+            )}
           </section>
         )}
 
