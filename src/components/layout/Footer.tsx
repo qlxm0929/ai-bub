@@ -40,22 +40,12 @@ export default function Footer() {
             <h3 className="font-semibold text-white mb-4">문의 · 제보</h3>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="mailto:feedback@ai-el.kr"
+                <Link
+                  href="/contact"
                   className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1.5"
                 >
-                  ✉️ 이메일 문의
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://forms.gle/your-form-id"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1.5"
-                >
-                  📋 도구 제보하기
-                </a>
+                  📋 링크 오류 · 도구 제보
+                </Link>
               </li>
               <li>
                 <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">ChatGPT</a>
