@@ -70,7 +70,22 @@ export async function POST(req: NextRequest) {
           }
         });
 
-        let code = response.text || '';
+        // response.text 는 getter — 일부 모델(2.5-flash thinking mode)에서 undefined 반환 가능
+        // candidates → parts → text 를 직접 추출하는 방어 코드 추가
+        let code: string =
+          response.text ??
+          (response as any)?.candidates?.[0]?.content?.parts
+            ?.map((p: any) => p.text ?? '')
+            .join('') ??
+          '';
+
+        console.log(`[generate-ui] response.text length: ${code.length}, preview: ${code.slice(0, 80)}`);
+
+        if (!code.trim()) {
+          console.warn(`[generate-ui] Empty response from model ${model}, trying next`);
+          lastError = new Error('Empty response from model');
+          continue;
+        }
 
         // Extract code from markdown block if present
         const match = code.match(/```tsx([\s\S]*?)```/) || code.match(/```jsx([\s\S]*?)```/) || code.match(/```([\s\S]*?)```/);
@@ -80,7 +95,12 @@ export async function POST(req: NextRequest) {
           code = code.trim();
         }
 
-        console.log(`[generate-ui] Success with model: ${model}`);
+        if (!code) {
+          lastError = new Error('Could not extract code from response');
+          continue;
+        }
+
+        console.log(`[generate-ui] Success with model: ${model}, code length: ${code.length}`);
         return NextResponse.json({ code, model });
 
       } catch (err: any) {

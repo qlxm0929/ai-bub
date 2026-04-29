@@ -171,6 +171,10 @@ export default function AppGeneratorPage() {
         throw new Error(rawMsg);
       }
 
+      if (!data.code?.trim()) {
+        throw new Error('AI가 코드를 반환하지 않았습니다. 프롬프트를 좀 더 구체적으로 작성하고 다시 시도해보세요.');
+      }
+
       setCode(data.code);
       setSandpackKey(k => k + 1);
     } catch (err: any) {
