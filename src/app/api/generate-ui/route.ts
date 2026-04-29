@@ -11,6 +11,16 @@ Return ONLY the raw code inside a \`\`\`tsx code block. Do not include any expla
 The component MUST be exported as the default export.
 Make the design look modern, beautiful, and dynamic.
 
+IMAGE RULES (very important):
+- Never use unsplash.com, pexels.com, picsum.photos, or any random external image URLs — they will be blocked in the sandbox.
+- For placeholder images, ALWAYS use this format: https://placehold.co/WIDTHxHEIGHT/BGCOLOR/TEXTCOLOR?text=Label
+  Examples:
+    https://placehold.co/400x300/1e293b/94a3b8?text=Product
+    https://placehold.co/80x80/6366f1/ffffff?text=User
+    https://placehold.co/600x400/0f172a/22d3ee?text=Banner
+- For avatars, use: https://placehold.co/64x64/7c3aed/ffffff?text=AB (initials)
+- For icons/decoration, prefer lucide-react components or CSS/SVG shapes instead of <img> tags.
+
 Example structure:
 \`\`\`tsx
 import React from 'react';
