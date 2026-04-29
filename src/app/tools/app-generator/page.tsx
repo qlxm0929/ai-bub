@@ -5,18 +5,24 @@ import { Code, Eye, Sparkles, Send, Loader2, AlertCircle, Key, X, CheckCircle, C
 import LoadingEKG from '@/components/ui/LoadingEKG';
 
 // ── 기본 코드 ─────────────────────────────────────────────────────
-const DEFAULT_CODE = `function App() {
+const DEFAULT_CODE = `import React from 'react';
+import { Sparkles } from 'lucide-react';
+
+export default function App() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-4">
       <div className="bg-white/5 backdrop-blur rounded-3xl border border-white/10 p-10 max-w-md w-full text-center shadow-2xl">
         <div className="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-          <span className="text-3xl">✨</span>
+          <Sparkles className="w-8 h-8 text-blue-400 animate-pulse" />
         </div>
         <h1 className="text-2xl font-bold text-white mb-3">AI App Generator</h1>
         <p className="text-slate-400 mb-8 leading-relaxed text-sm">
           왼쪽에 원하는 UI를 설명해주세요. AI가 코드를 작성하고 즉시 보여줍니다.
         </p>
-        <button className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-medium transition-colors">
+        <button 
+          onClick={() => alert('이 버튼은 예시입니다! 좌측에서 프롬프트를 입력하세요.')}
+          className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-medium transition-colors"
+        >
           시작하기
         </button>
       </div>
@@ -26,32 +32,48 @@ const DEFAULT_CODE = `function App() {
 
 /** iframe srcdoc 생성 — React + Tailwind + Babel standalone CDN */
 function buildSrcdoc(code: string): string {
+  // import 구문을 지원하기 위해 ESM(importmap) + Babel data-type="module" 사용
   return `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <script src="https://cdn.tailwindcss.com"><\/script>
-  <script src="https://unpkg.com/react@18/umd/react.development.js"><\/script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"><\/script>
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.300.0?deps=react@18.2.0"
+      }
+    }
+  <\/script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"><\/script>
   <style>
     body { margin:0; padding:0; font-family: system-ui, sans-serif; }
-    #error { display:none; padding:16px; background:#fef2f2; color:#b91c1c; font-size:13px; font-family:monospace; white-space:pre-wrap; }
+    #error { display:none; padding:16px; background:#fef2f2; color:#b91c1c; font-size:13px; font-family:monospace; white-space:pre-wrap; z-index:9999; position:relative; }
   </style>
+  <script>
+    window.addEventListener('error', function(e) {
+      document.getElementById('error').style.display = 'block';
+      document.getElementById('error').textContent = '⚠ 렌더링 오류: ' + e.error.message;
+    });
+  <\/script>
 </head>
 <body>
-  <div id="root"></div>
   <div id="error"></div>
-  <script type="text/babel" data-presets="react">
-    try {
-      ${code}
-      const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(React.createElement(App));
-    } catch(e) {
-      document.getElementById('error').style.display = 'block';
-      document.getElementById('error').textContent = '⚠ 렌더링 오류: ' + e.message;
-    }
+  <div id="root"></div>
+  <script type="text/babel" data-type="module" data-presets="react">
+    import ___React from 'react';
+    import ___ReactDOM from 'react-dom/client';
+    
+    // --- AI Generated Code ---
+    ${code}
+    // -------------------------
+
+    // App 컴포넌트 마운트
+    const root = ___ReactDOM.createRoot(document.getElementById('root'));
+    root.render(___React.createElement(App));
   <\/script>
 </body>
 </html>`;
