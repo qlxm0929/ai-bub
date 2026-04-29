@@ -37,17 +37,13 @@ export default function App() {
   );
 }`;
 
-const INDEX_TSX = `import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-
-const script = document.createElement('script');
-script.src = 'https://cdn.tailwindcss.com';
-document.head.appendChild(script);
-
-const rootElement = document.getElementById('root');
-ReactDOM.createRoot(rootElement).render(React.createElement(App));
-`;
+/** 코드 펜스 혹시 남아있으면 제거 */
+function stripFence(code: string): string {
+  return code
+    .replace(/^```[a-z]*\n?/i, '')
+    .replace(/```\s*$/i, '')
+    .trim();
+}
 
 const LS_KEY = 'aiel_gemini_api_key';
 
@@ -175,7 +171,7 @@ export default function AppGeneratorPage() {
         throw new Error('AI가 코드를 반환하지 않았습니다. 프롬프트를 좀 더 구체적으로 작성하고 다시 시도해보세요.');
       }
 
-      setCode(data.code);
+      setCode(stripFence(data.code));
       setSandpackKey(k => k + 1);
     } catch (err: any) {
       const msg: string = err.message || '';
@@ -334,18 +330,35 @@ export default function AppGeneratorPage() {
               </div>
             </div>
           )}
+
+          {/* Sandpack — react 템플릿 + externalResources로 Tailwind 주입 */}
           <SandpackProvider
             key={sandpackKey}
-            template="react-ts"
+            template="react"
             theme="light"
-            files={{ '/App.tsx': code, '/index.tsx': INDEX_TSX }}
-            customSetup={{ dependencies: { react: '^18.0.0', 'react-dom': '^18.0.0', 'lucide-react': 'latest' } }}
+            files={{ '/App.js': code }}
+            customSetup={{
+              dependencies: { 'lucide-react': 'latest' },
+            }}
+            options={{
+              externalResources: ['https://cdn.tailwindcss.com'],
+            }}
           >
             <SandpackLayout className="!border-0 !rounded-none !h-full bg-transparent flex flex-col">
               {viewMode === 'preview' ? (
-                <SandpackPreview showNavigator={true} showOpenInCodeSandbox={false} showRefreshButton={true} className="flex-1 w-full" />
+                <SandpackPreview
+                  showNavigator={false}
+                  showOpenInCodeSandbox={false}
+                  showRefreshButton={true}
+                  className="flex-1 w-full"
+                />
               ) : (
-                <SandpackCodeEditor showTabs={false} showLineNumbers={true} showReadOnly={false} className="flex-1 w-full text-sm" />
+                <SandpackCodeEditor
+                  showTabs={false}
+                  showLineNumbers={true}
+                  showReadOnly={false}
+                  className="flex-1 w-full text-sm"
+                />
               )}
             </SandpackLayout>
           </SandpackProvider>
