@@ -1,6 +1,7 @@
 export type Platform = 'threads' | 'instagram';
 export type Topic = 'tools' | 'workflow' | 'research' | 'image' | 'offers';
 export type SocialPost = {
+  readonly origin?: 'search';
   readonly id: string;
   readonly platform: Platform;
   readonly author: string;
