@@ -4,7 +4,7 @@ export async function translateToKorean(text: string): Promise<string> {
   if (!text || text.trim().length === 0) return text;
 
   // 이미 한국어가 많이 포함된 경우 번역 스킵
-  const koreanCharCount = (text.match(/[\uAC00-\uD7AF]/g) || []).length;
+  const koreanCharCount = (text.match(/[가-힣]/g) || []).length;
   if (koreanCharCount / text.length > 0.3) return text;
 
   try {

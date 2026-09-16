@@ -1,12 +1,12 @@
 // Server Component — 'use client' 없음
 // Product Hunt 데이터를 서버에서 미리 가져와 초기 HTML에 포함시킴
-import { fetchNewTools } from '@/lib/newtools';
+import { type NewTool, fetchNewTools } from '@/lib/newtools';
 import ToolsClient from './ToolsClient';
 
 export const revalidate = 3600; // 1시간마다 재검증
 
 export default async function ToolsPage() {
-  let initialNewTools = [];
+  let initialNewTools: NewTool[] = [];
   let fetchFailed = false;
 
   try {

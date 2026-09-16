@@ -228,3 +228,8 @@
     radial-gradient(1px 1px at 80% 80%, rgba(255,255,255,0.4) 1px, transparent 0);
   background-size: 200px 200px;
 }
+/* Preserve Korean phrases in the news workspace without affecting other pages. */
+.news-hub {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}

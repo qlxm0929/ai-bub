@@ -89,6 +89,7 @@ const feeds = [
 
 
 const parser = new Parser({
+  timeout: 8000,
   customFields: {
     item: [['media:content', 'mediaContent'], ['media:thumbnail', 'mediaThumbnail']],
   },
@@ -111,7 +112,14 @@ function getTranslateLink(url: string, isKorean: boolean): string {
 
 import { translateToKorean } from './translate';
 
-export async function fetchNews(limit = 100): Promise<NewsItem[]> {
+export interface NewsFetchResult {
+  readonly news: NewsItem[];
+  readonly sources: { readonly name: string; readonly ok: boolean; readonly checkedAt: string | null }[];
+  readonly updatedAt: string | null;
+}
+
+export async function fetchNewsSnapshot(limit = 100): Promise<NewsFetchResult> {
+  const sources: NewsFetchResult['sources'] = [];
   const allItems: NewsItem[] = [];
 
   await Promise.allSettled(
@@ -128,12 +136,12 @@ export async function fetchNews(limit = 100): Promise<NewsItem[]> {
           }
           
           return {
-            id: `${feed.source}-${idx}-${Date.now()}`,
+            id: item.link || `${feed.source}-${idx}`,
             title,
             summary,
             link: item.link || '#',
             translateLink: getTranslateLink(item.link || '#', feed.isKorean),
-            pubDate: item.pubDate || item.isoDate || new Date().toISOString(),
+            pubDate: item.pubDate || item.isoDate || '',
             source: feed.source,
             sourceKo: feed.sourceKo,
             category: feed.category,
@@ -143,8 +151,10 @@ export async function fetchNews(limit = 100): Promise<NewsItem[]> {
           };
         }));
         allItems.push(...items);
+        sources.push({ name: feed.sourceKo, ok: true, checkedAt: new Date().toISOString() });
       } catch (e) {
-        console.error(`Failed to fetch ${feed.source}:`, e);
+        sources.push({ name: feed.sourceKo, ok: false, checkedAt: null });
+        console.error(`Failed to fetch ${feed.source}:`, e instanceof Error ? e.name : "UnknownError");
       }
     })
   );
@@ -158,10 +168,16 @@ export async function fetchNews(limit = 100): Promise<NewsItem[]> {
     .filter((i) => !i.isKorean)
     .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 
-  return [...koreanNews, ...englishNews].slice(0, limit);
+  const updatedAt = sources.flatMap((source) => source.checkedAt ? [source.checkedAt] : []).sort().at(-1) ?? null;
+  return { news: [...koreanNews, ...englishNews].slice(0, limit), sources, updatedAt };
+}
+
+export async function fetchNews(limit = 100): Promise<NewsItem[]> {
+  return (await fetchNewsSnapshot(limit)).news;
 }
 
 export function timeAgo(dateStr: string): string {
+  if (!dateStr || !Number.isFinite(Date.parse(dateStr))) return '게시일 미확인';
   const date = new Date(dateStr);
   const now = new Date();
   const diff = now.getTime() - date.getTime();

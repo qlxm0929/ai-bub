@@ -1,18 +1,22 @@
-import { NextResponse } from 'next/server';
-import { fetchNews } from '@/lib/rss';
+import { unstable_cache } from 'next/cache';
+import { fetchNewsSnapshot } from '@/lib/rss';
 
-// 1분마다 자동 갱신 (실시간 업데이트 용)
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
+const getNews = unstable_cache(async (minute: number) => {
+  void minute;
+  return fetchNewsSnapshot(100);
+}, ['news-with-source-status-v1'], { revalidate: 60 });
 
 export async function GET() {
   try {
-    const news = await fetchNews(100); // 전체 뉴스 페이지용
-    return NextResponse.json({ 
-      news,
-      updatedAt: new Date().toISOString()
+    const result = await getNews(Math.floor(Date.now() / 60000));
+    return Response.json(result, {
+      status: result.sources.some((source) => source.ok) ? 200 : 503,
+      headers: { 'Cache-Control': 'no-store' },
     });
   } catch (error) {
-    console.error('Failed to fetch news:', error);
-    return NextResponse.json({ news: [], error: 'Failed to fetch news' }, { status: 500 });
+    console.error('Failed to fetch news:', error instanceof Error ? error.name : 'UnknownError');
+    return Response.json({ error: '뉴스 수집에 실패했습니다.' }, { status: 503 });
   }
 }
