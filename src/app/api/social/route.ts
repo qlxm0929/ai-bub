@@ -9,12 +9,12 @@ export async function GET() {
   const requestedAt = Date.now();
   const bucket = Math.floor(requestedAt / SOCIAL_WINDOW);
   const headers = { 'Cache-Control': 'no-store' };
-  if (!process.env.TAVILY_API_KEY?.trim()) {
+  if (!process.env.TAVILY_API_KEY?.trim() && !process.env.GOOGLE_ALERTS_RSS_URL?.trim()) {
     return Response.json({ snapshot: await collectSocial(), delivery: 'unconnected' }, { status: 503, headers });
   }
   try {
     if (!pending || pending.bucket !== bucket) {
-      const cached = unstable_cache(collectSocial, ['sns-search-v1', String(bucket)], { revalidate: 600 });
+      const cached = unstable_cache(collectSocial, ['sns-search-v2', String(bucket)], { revalidate: 600 });
       pending = { bucket, value: cached() };
     }
     const snapshot = await pending.value;

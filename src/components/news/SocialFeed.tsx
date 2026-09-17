@@ -27,8 +27,8 @@ export function SocialFeed() {
     <header className="space-y-3">
       <p className="text-cyan-300 text-sm">Threads · Instagram</p>
       <h1 id="social-title" className="text-2xl sm:text-4xl font-bold text-white">SNS에서 찾은 AI</h1>
-      <p className="text-gray-300 leading-relaxed">도구를 발견하고, 활용법을 모아보세요. 새로고침하면 공개 검색에서 AI 관련 게시글을 찾아옵니다.</p>
-      <p className="text-xs text-gray-400 leading-relaxed">최근 한 달 공개 검색 기준 · 색인에 따라 누락·오래된 글이 포함될 수 있습니다. 검색 발췌는 원문 전체 확인과 다릅니다.</p>
+      <p className="text-gray-300 leading-relaxed">도구를 발견하고, 활용법을 모아보세요. 새로고침으로 연결된 소스의 AI 관련 게시글을 확인하세요.</p>
+      <p className="text-xs text-gray-400 leading-relaxed">{snapshot?.provider === 'google-alerts' ? 'Google 알리미 RSS · Google이 발견해 피드에 전달한 글을 가져옵니다. 새로고침이 SNS 전체를 즉시 검색하는 것은 아닙니다.' : '최근 한 달 공개 검색 기준 · 색인에 따라 누락·오래된 글이 포함될 수 있습니다. 검색 발췌는 원문 전체 확인과 다릅니다.'}</p>
     </header>
     <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 space-y-3" aria-busy={loading}>
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -37,7 +37,7 @@ export function SocialFeed() {
           <RefreshCw size={16} className={loading ? 'animate-spin motion-reduce:animate-none' : ''} aria-hidden="true" />{loading ? '수집 중…' : remaining > 0 ? `${Math.ceil(remaining / 60)}분 후 새로고침` : '새로고침'}
         </button>
       </div>
-      <p role="status" className="text-sm leading-relaxed text-gray-300">{loading ? 'Threads·Instagram 공개 검색을 조회하고 있습니다.' : notice || '이전 자료를 표시하고 있습니다.'}</p>
+      <p role="status" className="text-sm leading-relaxed text-gray-300">{loading ? '연결된 소스에서 Threads·Instagram 글을 조회하고 있습니다.' : notice || '이전 자료를 표시하고 있습니다.'}</p>
       <div className="grid sm:grid-cols-2 gap-3">{snapshot?.sources.map((source) => <div key={source.platform} className="rounded-xl bg-black/20 p-3 space-y-1 text-xs leading-relaxed">
         <p className={source.status === 'success' ? 'text-emerald-300' : source.status === 'failed' ? 'text-amber-200' : 'text-gray-300'}>{platforms[source.platform]} · {source.status === 'success' ? `${source.count}개` : source.status === 'failed' ? '수집 실패' : '미연결'}</p>
         <p className="text-gray-400">{source.message}</p>

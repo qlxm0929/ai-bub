@@ -15,6 +15,7 @@ export const socialSourceSchema = z.object({
   attemptedAt: z.iso.datetime().nullable(), lastSuccessAt: z.iso.datetime().nullable(),
 });
 export const socialSnapshotSchema = z.object({
+  provider: z.enum(['tavily', 'google-alerts']).optional(),
   collectedAt: z.iso.datetime(), nextRefreshAt: z.iso.datetime(),
   posts: z.array(socialPostSchema).max(200), sources: z.array(socialSourceSchema).length(2),
 });

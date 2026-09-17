@@ -43,7 +43,7 @@ export function useSocial() {
       setNotice(parsed.delivery === 'unconnected' ? '자동 수집 미연결 · 기존 선별 글을 표시합니다.'
         : success === 0 ? '새 수집에 실패했습니다. 이전 수집 결과와 선별 글을 표시합니다.'
         : success < 2 ? '일부 수집 실패 · 실패한 플랫폼은 이전 결과를 유지합니다.'
-        : parsed.delivery === 'cached' ? '10분 수집 간격 안의 저장 결과입니다.' : '공개 검색 조회를 완료했습니다.');
+        : parsed.delivery === 'cached' ? '10분 수집 간격 안의 저장 결과입니다.' : next.provider === 'google-alerts' ? next.posts.length ? 'Google 알리미 RSS를 조회했습니다.' : 'RSS 연결 정상 · Google이 새 게시글을 전달하면 여기에 표시됩니다.' : '공개 검색 조회를 완료했습니다.');
       try { localStorage.setItem(snapshotKey, JSON.stringify(next)); }
       catch { setError('조회는 완료했지만 브라우저에 결과를 보관하지 못했습니다.'); }
     } catch {
